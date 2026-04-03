@@ -329,6 +329,21 @@
 const REQUIRED = ['voornaam', 'voorletters', 'achternaam', 'email', 'telefoon', 'straat', 'huisnummer', 'postcode', 'woonplaats', 'notities'];
 const ALL_FIELDS = ['bedrijf', ...REQUIRED, 'toevoeging'];
 
+// Auto-fill city based on Dutch postcode
+document.getElementById('postcode').addEventListener('blur', async () => {
+  const postcodeEl = document.getElementById('postcode');
+  const woonplaatsEl = document.getElementById('woonplaats');
+  const raw = postcodeEl.value.trim().replace(/\s/g, '').toUpperCase();
+  if (!/^\d{4}[A-Z]{2}$/.test(raw)) return;
+  if (woonplaatsEl.value.trim()) return; // don't overwrite user input
+  try {
+    const resp = await fetch(`https://postcode.tech/api/v1/postcode?postcode=${raw}`);
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (data.city) woonplaatsEl.value = data.city;
+  } catch { /* silent fail */ }
+});
+
 document.getElementById('inschrijf-form').addEventListener('submit', async e => {
   e.preventDefault();
 
