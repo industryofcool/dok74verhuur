@@ -165,6 +165,11 @@ REPAIR_CATEGORIES = {
 }
 
 
+@app.route('/landing')
+def landing():
+    return render_template('landing.html')
+
+
 @app.route('/reparatie')
 def reparatie_page():
     return render_template('reparatie.html')
