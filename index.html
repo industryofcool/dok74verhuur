@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HuurGemak — Uw huurderportal</title>
+  <style>
+    :root {
+      --brand:      #2563EB;
+      --brand-dark: #1D4ED8;
+      --brand-soft: #EFF6FF;
+      --accent:     #10B981;
+      --text:       #1E293B;
+      --muted:      #64748B;
+      --border:     #E2E8F0;
+      --white:      #FFFFFF;
+      --radius:     16px;
+      --shadow:     0 4px 24px rgba(37,99,235,.10);
+      --shadow-hover: 0 8px 32px rgba(37,99,235,.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F8FAFC;
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 68px;
+    }
+    .logo-mark {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+    }
+    .brand-name {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--brand);
+      letter-spacing: -.02em;
+    }
+    .brand-name span {
+      color: var(--accent);
+    }
+    .header-tagline {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--brand) 0%, #1D4ED8 60%, #6366F1 100%);
+      padding: 56px 24px 52px;
+      text-align: center;
+      color: var(--white);
+    }
+    .hero-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      opacity: .88;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── MAIN GRID ── */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+    }
+    .section-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 18px;
+    }
+
+    /* ── TILE ── */
+    .tile {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+    .tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      transition: border-color .18s ease;
+      pointer-events: none;
+    }
+    .tile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+    .tile:hover::after {
+      border-color: var(--brand);
+    }
+
+    .tile-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tile-icon svg { width: 26px; height: 26px; }
+
+    .tile-body { flex: 1; }
+    .tile-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+    .tile-desc {
+      font-size: .84rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .tile-arrow {
+      margin-top: 3px;
+      color: var(--muted);
+      transition: color .18s, transform .18s;
+    }
+    .tile:hover .tile-arrow {
+      color: var(--brand);
+      transform: translateX(3px);
+    }
+
+    /* tile colour themes */
+    .c-blue   { background: #EFF6FF; }
+    .c-green  { background: #ECFDF5; }
+    .c-amber  { background: #FFFBEB; }
+    .c-red    { background: #FEF2F2; }
+    .c-purple { background: #F5F3FF; }
+    .c-teal   { background: #F0FDFA; }
+    .c-blue svg   { color: #2563EB; }
+    .c-green svg  { color: #059669; }
+    .c-amber svg  { color: #D97706; }
+    .c-red svg    { color: #DC2626; }
+    .c-purple svg { color: #7C3AED; }
+    .c-teal svg   { color: #0D9488; }
+
+    /* ── EMERGENCY BANNER ── */
+    .emergency {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+      cursor: pointer;
+      transition: box-shadow .18s;
+    }
+    .emergency:hover { box-shadow: 0 4px 16px rgba(220,38,38,.12); }
+    .emergency-icon {
+      width: 44px; height: 44px;
+      background: #FEE2E2;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .emergency-icon svg { width: 22px; height: 22px; color: #DC2626; }
+    .emergency-text strong {
+      display: block;
+      color: #B91C1C;
+      font-size: .92rem;
+      font-weight: 700;
+    }
+    .emergency-text span {
+      font-size: .8rem;
+      color: #EF4444;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      font-size: .78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 40px 20px 36px; }
+      .tiles { grid-template-columns: 1fr; }
+      .header-tagline { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <!-- Logo mark: house + sleutel symbool -->
+    <svg class="logo-mark" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="42" height="42" rx="10" fill="#2563EB"/>
+      <!-- dak -->
+      <path d="M9 20.5L21 10l12 10.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- muren -->
+      <path d="M13 20.5V32h6v-6h4v6h6V20.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- sleutelgat in deur -->
+      <circle cx="21" cy="26.5" r="1.3" fill="#10B981"/>
+    </svg>
+
+    <span class="brand-name">Huur<span>Gemak</span></span>
+    <span class="header-tagline">Uw huurderportal</span>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-icon" aria-hidden="true">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 14.5L16 5l12 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M7 14.5V27h6v-7h6v7h6V14.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h1>Welkom bij HuurGemak</h1>
+  <p>Wat kunnen wij voor u regelen? Kies hieronder wat u nodig heeft.</p>
+</section>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- Spoed -->
+  <div class="emergency" role="button" tabindex="0" aria-label="Spoedmelding">
+    <div class="emergency-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="emergency-text">
+      <strong>Spoed — lekkage, brand of inbraak?</strong>
+      <span>Bel direct onze spoedlijn: <b>0800 – 000 0000</b> (24/7 bereikbaar)</span>
+    </div>
+  </div>
+
+  <!-- Tiles sectie -->
+  <p class="section-label">Waarmee kunnen we u helpen?</p>
+
+  <div class="tiles">
+
+    <!-- Reparatie -->
+    <a class="tile" href="#reparatie" aria-label="Reparatie melden">
+      <div class="tile-icon c-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Reparatie melden</div>
+        <div class="tile-desc">Iets stuk of kapot in uw woning? Meld het hier snel en eenvoudig.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+    <!-- Huurcontract -->
+    <a class="tile" href="#contract" aria-label="Huurcontract & documenten">
+      <div class="tile-icon c-purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+        </svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Huurcontract &amp; documenten</div>
+        <div class="tile-desc">Bekijk uw huurcontract, huisregels en andere belangrijke documenten.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+    <!-- Betaling -->
+    <a class="tile" href="#betaling" aria-label="Betaling & facturen">
+      <div class="tile-icon c-green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Betaling &amp; facturen</div>
+        <div class="tile-desc">Vragen over uw huur, servicekosten of een factuur? Hier vindt u informatie.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+    <!-- Sleutels & toegang -->
+    <a class="tile" href="#sleutels" aria-label="Sleutels & toegang">
+      <div class="tile-icon c-amber">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+        </svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Sleutels &amp; toegang</div>
+        <div class="tile-desc">Extra sleutel aanvragen, sleutel kwijt of toegangspas defect? Regel het hier.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+    <!-- Klacht -->
+    <a class="tile" href="#klacht" aria-label="Klacht indienen">
+      <div class="tile-icon c-red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Klacht indienen</div>
+        <div class="tile-desc">Niet tevreden over iets? Laat het ons weten via ons klachtenformulier.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+    <!-- Contact -->
+    <a class="tile" href="#contact" aria-label="Contact opnemen">
+      <div class="tile-icon c-teal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.59 1.21l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l1.36-1.36a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Contact opnemen</div>
+        <div class="tile-desc">Wilt u persoonlijk contact? Stuur ons een bericht of bekijk onze contactgegevens.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+  </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  &copy; 2026 HuurGemak &nbsp;·&nbsp; Uw vragen, snel geregeld
+</footer>
+
+</body>
+</html>

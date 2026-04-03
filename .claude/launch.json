@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "huurgemak",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "/usr/bin/python3 -m http.server 8055 --directory '/Users/frans/Documents/ClaudeCodeZandbak/huurgemak'"],
+      "port": 8055
+    }
+  ]
+}

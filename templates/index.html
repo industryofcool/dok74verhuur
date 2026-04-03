@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOK74 Verhuur — Klantenportaal</title>
+  <style>
+    :root {
+      --yellow:      #F5C900;
+      --yellow-dark: #C9A400;
+      --yellow-soft: #FFFBE6;
+      --grey-900:    #2A2A2A;
+      --grey-700:    #585858;
+      --grey-500:    #8A8A8A;
+      --grey-200:    #E8E8E8;
+      --grey-100:    #F5F5F5;
+      --white:       #FFFFFF;
+      --red:         #DC2626;
+      --red-soft:    #FEF2F2;
+      --red-border:  #FECACA;
+      --shadow:      0 2px 16px rgba(0,0,0,.07);
+      --shadow-md:   0 4px 24px rgba(0,0,0,.11);
+      --shadow-lg:   0 8px 40px rgba(0,0,0,.18);
+      --radius:      12px;
+      --radius-sm:   8px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--grey-100);
+      color: var(--grey-900);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--grey-200);
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    }
+    .header-inner {
+      max-width: 1040px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: flex-end; height: 56px;
+    }
+    .header-phone {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .85rem; color: var(--grey-700);
+      text-decoration: none; padding: 7px 13px;
+      border-radius: var(--radius-sm); border: 1px solid var(--grey-200);
+      transition: border-color .15s, background .15s;
+    }
+    .header-phone:hover { border-color: var(--yellow); background: var(--yellow-soft); }
+    .header-phone svg { color: var(--grey-500); flex-shrink: 0; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--white);
+      border-bottom: 3px solid var(--yellow);
+      padding: 36px 24px 32px;
+    }
+    .hero-inner {
+      max-width: 1040px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: 16px;
+    }
+    .hero-logo-wrap { height: 60px; overflow: hidden; }
+    .hero-logo { height: 100px; width: auto; display: block; }
+    .hero-text h1 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800; letter-spacing: -.03em;
+      color: var(--grey-900); margin-bottom: 8px;
+    }
+    .hero-text h1 span { color: var(--yellow-dark); }
+    .hero-text p { font-size: 1rem; color: var(--grey-700); line-height: 1.6; max-width: 520px; margin: 0 auto; }
+
+    /* ── MAIN ── */
+    main { max-width: 1040px; margin: 0 auto; padding: 36px 20px 72px; }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 28px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--white); border: 1px solid var(--grey-200);
+      border-radius: var(--radius-sm); padding: 7px 14px;
+      font-size: .84rem; font-weight: 600; color: var(--grey-700);
+      cursor: pointer; font-family: inherit;
+      transition: border-color .15s, background .15s;
+    }
+    .back-btn:hover { border-color: var(--yellow); background: var(--yellow-soft); }
+    .breadcrumb-sep { color: var(--grey-200); font-size: 1rem; }
+    .breadcrumb-current { font-size: .84rem; color: var(--grey-500); }
+
+    /* ── EMERGENCY ── */
+    .emergency {
+      background: var(--red-soft); border: 1px solid var(--red-border);
+      border-left: 4px solid var(--red); border-radius: var(--radius);
+      padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+    }
+
+    .emergency-icon {
+      width: 38px; height: 38px; background: #FEE2E2; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .emergency-icon svg { width: 18px; height: 18px; color: var(--red); }
+    .emergency-body strong { display: block; font-size: .9rem; font-weight: 700; color: #B91C1C; margin-bottom: 2px; }
+    .emergency-body span { font-size: .8rem; color: #EF4444; }
+    .emergency-body a { color: #B91C1C; font-weight: 700; text-decoration: none; }
+    .emergency-body a:hover { text-decoration: underline; }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--grey-500); margin-bottom: 16px;
+    }
+
+    /* ── TILES ── */
+    .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .tile {
+      background: var(--white); border: 1px solid var(--grey-200);
+      border-radius: var(--radius); padding: 22px 18px;
+      cursor: pointer; display: flex; align-items: flex-start; gap: 14px;
+      transition: transform .17s, box-shadow .17s, border-color .17s;
+      text-align: left; color: inherit; font: inherit; width: 100%;
+    }
+    .tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--yellow); }
+    .tile-icon {
+      width: 46px; height: 46px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .tile-icon svg { width: 22px; height: 22px; }
+    .tile-body { flex: 1; min-width: 0; }
+    .tile-title { font-size: .95rem; font-weight: 700; margin-bottom: 4px; color: var(--grey-900); }
+    .tile-desc { font-size: .8rem; color: var(--grey-500); line-height: 1.5; }
+    .tile-arrow { color: var(--grey-200); transition: color .17s, transform .17s; flex-shrink: 0; margin-top: 2px; }
+    .tile:hover .tile-arrow { color: var(--yellow-dark); transform: translateX(3px); }
+    .ic-blue   { background: #EFF6FF; } .ic-blue   svg { color: #2563EB; }
+    .ic-purple { background: #F5F3FF; } .ic-purple svg { color: #7C3AED; }
+    .ic-green  { background: #ECFDF5; } .ic-green  svg { color: #059669; }
+    .ic-amber  { background: #FFFBEB; } .ic-amber  svg { color: #D97706; }
+    .ic-red    { background: #FEF2F2; } .ic-red    svg { color: #DC2626; }
+    .ic-teal   { background: #F0FDFA; } .ic-teal   svg { color: #0D9488; }
+    .ic-indigo { background: #EEF2FF; } .ic-indigo svg { color: #4F46E5; }
+    .ic-rose   { background: #FFF1F2; } .ic-rose   svg { color: #E11D48; }
+
+    /* ── MODAL ── */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45);
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      z-index: 200; opacity: 0; pointer-events: none; transition: opacity .2s ease;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+    .modal-box {
+      background: var(--white); border-radius: 16px;
+      width: 100%; max-width: 540px; max-height: 92vh; overflow-y: auto;
+      padding: 32px; position: relative; box-shadow: var(--shadow-lg);
+      transform: translateY(16px) scale(.98); transition: transform .2s ease;
+    }
+    .modal-backdrop.open .modal-box { transform: translateY(0) scale(1); }
+    .modal-close {
+      position: absolute; top: 16px; right: 18px;
+      background: var(--grey-100); border: none; border-radius: 50%;
+      width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--grey-700); transition: background .15s;
+    }
+    .modal-close:hover { background: var(--grey-200); }
+    .modal-title { font-size: 1.2rem; font-weight: 800; color: var(--grey-900); margin-bottom: 16px; padding-right: 36px; }
+
+    /* ── INFO CONTENT ── */
+    .info-content { font-size: .88rem; color: var(--grey-700); line-height: 1.7; }
+    .info-content p { margin-bottom: 10px; }
+    .info-content ul, .info-content ol { margin: 8px 0 12px 18px; }
+    .info-content li { margin-bottom: 5px; }
+    .info-content strong { color: var(--grey-900); }
+    .info-content h3 { font-size: .92rem; margin: 16px 0 7px; color: var(--grey-900); }
+    .info-box {
+      background: var(--grey-100); border-radius: var(--radius-sm);
+      padding: 14px 16px; margin: 14px 0; font-size: .85rem; color: var(--grey-700);
+    }
+    .info-contact-btn {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--yellow-soft); border: 1px solid #E8D800;
+      border-radius: var(--radius-sm); padding: 13px 16px; margin-top: 20px;
+      cursor: pointer; font: inherit; width: 100%;
+      transition: background .15s;
+    }
+    .info-contact-btn:hover { background: #FFF3A0; }
+    .info-contact-btn span { font-size: .88rem; font-weight: 600; color: var(--grey-900); }
+    .info-contact-btn svg { color: var(--grey-500); flex-shrink: 0; }
+
+    /* ── FORM ── */
+    .form-intro {
+      font-size: .86rem; color: var(--grey-700); line-height: 1.65;
+      margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--grey-200);
+    }
+    .form-intro p { margin-bottom: 8px; }
+    .form-intro ul { margin: 6px 0 8px 16px; }
+    .form-intro li { margin-bottom: 4px; }
+    .form-intro strong { color: var(--grey-900); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--grey-700); margin-bottom: 4px; }
+    .form-group label .req { color: var(--red); margin-left: 2px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 9px 11px; font-size: .88rem; font-family: inherit;
+      color: var(--grey-900); background: var(--white);
+      border: 1.5px solid var(--grey-200); border-radius: var(--radius-sm);
+      outline: none; transition: border-color .15s, box-shadow .15s; appearance: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(245,201,0,.18);
+    }
+    .form-group textarea { resize: vertical; min-height: 88px; }
+    .form-contact-hint { font-size: .76rem; color: var(--grey-500); margin: -8px 0 12px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .form-error {
+      background: var(--red-soft); border: 1px solid var(--red-border);
+      border-radius: var(--radius-sm); color: var(--red);
+      font-size: .83rem; padding: 9px 13px; margin-bottom: 14px;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--yellow); color: var(--grey-900); border: none;
+      border-radius: var(--radius-sm); padding: 11px 26px;
+      font-size: .92rem; font-weight: 700; font-family: inherit; cursor: pointer;
+      transition: background .15s, transform .12s; width: 100%; margin-top: 4px;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--yellow-dark); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: .55; cursor: default; }
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: transparent; color: var(--grey-700); border: 1.5px solid var(--grey-200);
+      border-radius: var(--radius-sm); padding: 10px 26px;
+      font-size: .88rem; font-weight: 600; font-family: inherit; cursor: pointer;
+      transition: border-color .15s, background .15s; width: 100%; margin-top: 10px;
+    }
+    .btn-outline:hover { border-color: var(--yellow); background: var(--yellow-soft); }
+
+    /* ── SUCCESS ── */
+    .modal-success { text-align: center; padding: 8px 0; }
+    .success-circle {
+      width: 64px; height: 64px; background: #ECFDF5; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+    }
+    .success-circle svg { width: 30px; height: 30px; color: #059669; }
+    .modal-success h3 { font-size: 1.1rem; font-weight: 800; color: var(--grey-900); margin-bottom: 8px; }
+    .modal-success p { font-size: .86rem; color: var(--grey-500); line-height: 1.6; margin-bottom: 22px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 22px 20px; font-size: .76rem;
+      color: var(--grey-500); border-top: 1px solid var(--grey-200); background: var(--white);
+    }
+    footer a { color: inherit; }
+
+    @media (max-width: 480px) {
+      .hero { padding: 24px 16px 20px; }
+      .modal-box { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="tel:0854011736" class="header-phone">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.59 1.21l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l1.36-1.36a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      085 401 1736
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo-wrap">
+      <img src="/static/logodok74.jpg" alt="DOK74 Verhuur BV" class="hero-logo" />
+    </div>
+    <div class="hero-text">
+      <h1>Welkom bij <span>DOK74</span> Verhuur</h1>
+      <p>Waarmee kunnen wij u helpen? Kies hieronder uw onderwerp en we begeleiden u naar de juiste informatie of het juiste formulier.</p>
+    </div>
+  </div>
+</section>
+
+<main>
+  <div id="breadcrumb" class="breadcrumb" style="display:none">
+    <button class="back-btn" id="back-btn">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Terug
+    </button>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current" id="breadcrumb-title"></span>
+  </div>
+
+  <p class="section-label" id="section-label"></p>
+  <div class="tiles" id="tiles-grid"></div>
+
+  <div id="emergency-banner" class="emergency" style="margin-top:24px;margin-bottom:0">
+    <div class="emergency-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="emergency-body">
+      <strong>Spoed — lekkage, brand of inbraak?</strong>
+      <span>Bel direct onze spoedlijn: <a href="tel:0854011736">085 401 1736</a> (24/7 bereikbaar)</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 DOK74 Verhuur BV &nbsp;&middot;&nbsp;
+  <a href="tel:0854011736">085 401 1736</a> &nbsp;&middot;&nbsp;
+  <a href="mailto:info@dok74verhuur.nl">info@dok74verhuur.nl</a> &nbsp;&middot;&nbsp;
+  <a href="https://www.facebook.com/DOK74VERHUUR" target="_blank" rel="noopener">Facebook</a>
+</footer>
+
+<div id="modal-backdrop" class="modal-backdrop">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close">&times;</button>
+    <h2 class="modal-title" id="modal-title"></h2>
+    <div id="modal-body"></div>
+    <div id="modal-success" class="modal-success" style="display:none">
+      <div class="success-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3>Bericht ontvangen!</h3>
+      <p>Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.</p>
+      <button type="button" class="btn-primary" onclick="closeModal()">Sluiten</button>
+      <button type="button" class="btn-outline" id="send-another">Nog een bericht sturen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── SVG ICONS ──────────────────────────────────────────────────────────────
+const IC = {
+  wrench:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  filetext:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+  card:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`,
+  key:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>`,
+  chat:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  phone:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.59 1.21l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l1.36-1.36a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+  download:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+  xcirc:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+  mappin:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  book:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+  userplus:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>`,
+  calendar:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  receipt:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16l4-2 4 2 4-2 4 2V8z"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>`,
+  info:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+  list:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`,
+  refresh:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`,
+  clock:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  alert:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+  arrow:     `<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>`,
+  bell:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`,
+};
+
+// ─── SCREENS ────────────────────────────────────────────────────────────────
+const SCREENS = {
+  home: {
+    emergency: true,
+    label: 'Waarmee kunnen we u helpen?',
+    tiles: [
+      { title: 'Inschrijven voor woningaanbod', desc: 'Schrijf u in en ontvang bericht als er iets passends beschikbaar komt.', color: 'ic-amber', icon: 'bell', action: { type: 'page', url: '/inschrijven' } },
+      { title: 'Reparatie melden',           desc: 'Iets stuk of kapot in uw woning? Meld het hier.',       color: 'ic-blue',   icon: 'wrench',   action: { type: 'page', url: '/reparatie' } },
+      { title: 'Huurcontract & documenten',  desc: 'Contract, opzegging, adreswijziging en huisregels.',    color: 'ic-purple', icon: 'filetext', action: { type: 'screen', key: 'contract' } },
+      { title: 'Betaling & facturen',        desc: 'Huurprijs, servicekosten, facturen en betalingen.',     color: 'ic-green',  icon: 'card',     action: { type: 'screen', key: 'betaling' } },
+      { title: 'Sleutels & toegang',         desc: 'Extra sleutel, sleutel kwijt of pas defect.',           color: 'ic-amber',  icon: 'key',      action: { type: 'modal', key: 'sleutels' } },
+      { title: 'Klacht indienen',            desc: 'Niet tevreden? Laat het ons weten.',                    color: 'ic-red',    icon: 'chat',     action: { type: 'modal', key: 'klacht' } },
+      { title: 'Contact opnemen',            desc: 'Stel een vraag of stuur ons een bericht.',              color: 'ic-teal',   icon: 'phone',    action: { type: 'modal', key: 'contact' } },
+    ],
+  },
+  contract: {
+    parent: 'home',
+    title: 'Huurcontract & documenten',
+    label: 'Wat heeft u nodig?',
+    tiles: [
+      { title: 'Kopie huurcontract opvragen',    desc: 'Vraag een digitale kopie van uw contract aan.',         color: 'ic-purple', icon: 'download', action: { type: 'modal', key: 'contract-kopie' } },
+      { title: 'Huurovereenkomst opzeggen',      desc: 'Informatie over opzeggen en het indienen van uw opzegging.', color: 'ic-red',    icon: 'xcirc',    action: { type: 'modal', key: 'contract-opzeggen' } },
+      { title: 'Adreswijziging doorgeven',       desc: 'Geef uw nieuwe correspondentieadres door.',             color: 'ic-teal',   icon: 'mappin',   action: { type: 'modal', key: 'contract-adres' } },
+      { title: 'Huisregels & afspraken',         desc: 'Bekijk de regels die gelden in en rondom uw woning.',   color: 'ic-indigo', icon: 'book',     action: { type: 'modal', key: 'contract-huisregels' } },
+      { title: 'Medehuurder toevoegen',          desc: 'Voeg een partner of medebewoner toe aan uw contract.',  color: 'ic-green',  icon: 'userplus', action: { type: 'modal', key: 'contract-medehuurder' } },
+      { title: 'Looptijd & verlenging',          desc: 'Alles over de duur van uw contract en verlenging.',     color: 'ic-amber',  icon: 'calendar', action: { type: 'modal', key: 'contract-looptijd' } },
+    ],
+  },
+  betaling: {
+    parent: 'home',
+    title: 'Betaling & facturen',
+    label: 'Wat heeft u nodig?',
+    tiles: [
+      { title: 'Factuur of betaalbewijs opvragen', desc: 'Vraag een factuur of betaalbewijs op voor een periode.',  color: 'ic-green',  icon: 'receipt',  action: { type: 'modal', key: 'betaling-factuur' } },
+      { title: 'Hoe is mijn huurprijs opgebouwd?', desc: 'Uitleg over kale huur, servicekosten en andere posten.',  color: 'ic-blue',   icon: 'info',     action: { type: 'modal', key: 'betaling-huurprijs' } },
+      { title: 'Servicekosten: wat betaal ik voor?', desc: 'Wat valt er onder uw servicekosten en hoe werkt de afrekening?', color: 'ic-indigo', icon: 'list',   action: { type: 'modal', key: 'betaling-servicekosten' } },
+      { title: 'Betaalmethode wijzigen',           desc: 'Wijzig uw rekeningnummer of betaalmethode.',              color: 'ic-amber',  icon: 'refresh',  action: { type: 'modal', key: 'betaling-methode' } },
+      { title: 'Betalingsregeling aanvragen',      desc: 'Lukt het tijdelijk niet? We denken graag mee.',           color: 'ic-teal',   icon: 'clock',    action: { type: 'modal', key: 'betaling-regeling' } },
+      { title: 'Betaald maar aanmaning gekregen',  desc: 'Uw betaling is gedaan maar u ontvangt toch een aanmaning.', color: 'ic-rose',  icon: 'alert',    action: { type: 'modal', key: 'betaling-aanmaning' } },
+    ],
+  },
+};
+
+// ─── MODAL CONTENT ──────────────────────────────────────────────────────────
+const MODALS = {
+  // ── HOOFDCATEGORIEËN (formulieren) ──────────────────────────────────────
+  'reparatie': {
+    type: 'form', title: 'Reparatie melden',
+    note: 'Bij spoed buiten kantoortijden: bel <strong>085 401 1736</strong> (24/7 bereikbaar).',
+    contactOptional: true,
+    fields: [
+      { id: 'naam',     label: 'Naam',                  type: 'text',     required: true,  ph: 'Uw volledige naam' },
+      { id: 'email',    label: 'E-mailadres',            type: 'email',    ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon', label: 'Telefoonnummer',         type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',    label: 'Adres van uw woning',    type: 'text',     required: true,  ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'urgentie', label: 'Urgentie',               type: 'select',   required: true,
+        options: ['Normaal — binnen enkele werkdagen', 'Spoed — zo snel mogelijk'] },
+      { id: 'bericht',  label: 'Omschrijf het probleem', type: 'textarea', required: true,  ph: 'Beschrijf zo duidelijk mogelijk wat er aan de hand is...' },
+    ],
+  },
+  'sleutels': {
+    type: 'form', title: 'Sleutels & toegang',
+    contactOptional: true,
+    fields: [
+      { id: 'naam',          label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',         label: 'E-mailadres',         type: 'email',    ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon',      label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',         label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'type_aanvraag', label: 'Soort aanvraag',      type: 'select',   required: true,
+        options: ['Extra sleutel aanvragen', 'Sleutel kwijt / verloren', 'Toegangspas defect', 'Anders'] },
+      { id: 'bericht',       label: 'Toelichting',         type: 'textarea', required: true, ph: 'Aanvullende informatie...' },
+    ],
+  },
+  'klacht': {
+    type: 'form', title: 'Klacht indienen',
+    fields: [
+      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'bericht',  label: 'Omschrijf uw klacht', type: 'textarea', required: true, ph: 'Vertel ons wat er is misgegaan...' },
+    ],
+  },
+  'contact': {
+    type: 'form', title: 'Contact opnemen',
+    contactOptional: true,
+    fields: [
+      { id: 'naam',     label: 'Naam',                                    type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',    label: 'E-mailadres',                              type: 'email',    ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon', label: 'Telefoonnummer',                           type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',    label: 'Adres van uw woning (indien van toepassing)', type: 'text', ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'bericht',  label: 'Uw bericht',                               type: 'textarea', required: true, ph: 'Hoe kunnen wij u helpen?' },
+    ],
+  },
+
+  // ── CONTRACT SUB-MODALS ──────────────────────────────────────────────────
+  'contract-kopie': {
+    type: 'form', title: 'Kopie huurcontract opvragen',
+    intro: 'Vraag hier een digitale kopie aan van uw huurovereenkomst. Wij verwerken uw aanvraag binnen <strong>2 werkdagen</strong> en sturen de kopie naar uw e-mailadres.',
+    fields: [
+      { id: 'naam',    label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',   label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'adres',   label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'bericht', label: 'Aanvullende opmerking (optioneel)', type: 'textarea', ph: 'Bijv. specifieke bijlage of versie' },
+    ],
+  },
+  'contract-opzeggen': {
+    type: 'form', title: 'Huurovereenkomst opzeggen',
+    intro: `De opzegtermijn bedraagt <strong>1 kalendermaand</strong>. Uw opzegging moet uiterlijk op de <strong>1e van de maand</strong> door ons zijn ontvangen om die maand nog in te gaan.<br><br><em>Voorbeeld: opzegging ontvangen op 15 april → huurovereenkomst eindigt op 31 mei.</em>`,
+    fields: [
+      { id: 'naam',          label: 'Naam',                  type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',         label: 'E-mailadres',            type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon',      label: 'Telefoonnummer',         type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',         label: 'Adres van uw woning',    type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'einddatum',     label: 'Gewenste einddatum',     type: 'date',     required: true },
+      { id: 'bericht',       label: 'Aanvullende toelichting', type: 'textarea', ph: 'Optionele toelichting...' },
+    ],
+  },
+  'contract-adres': {
+    type: 'form', title: 'Adreswijziging doorgeven',
+    intro: 'Geef hier uw nieuwe correspondentieadres door. Vergeet ook niet uw adres te wijzigen bij de gemeente (BRP).',
+    fields: [
+      { id: 'naam',        label: 'Naam',                        type: 'text',  required: true, ph: 'Uw volledige naam' },
+      { id: 'email',       label: 'E-mailadres',                  type: 'email', required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'adres',       label: 'Huidig adres (huurwoning)',    type: 'text',  required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'nieuw_adres', label: 'Nieuw correspondentieadres',   type: 'text',  required: true, ph: 'Nieuwe straat 1, Stad' },
+      { id: 'ingangsdatum',label: 'Ingangsdatum',                 type: 'date',  required: true },
+      { id: 'bericht',     label: 'Toelichting (optioneel)',      type: 'textarea', ph: '' },
+    ],
+  },
+  'contract-huisregels': {
+    type: 'info', title: 'Huisregels & afspraken',
+    contactKey: 'contract-vraag',
+    html: `
+      <p>Voor een prettige woonomgeving gelden de volgende regels:</p>
+      <ul>
+        <li><strong>Geluidsoverlast:</strong> Vermijd geluidsoverlast tussen 22:00 en 08:00.</li>
+        <li><strong>Gemeenschappelijke ruimtes:</strong> Gangen, trappenhuizen en bergingen dienen vrij te blijven van privéspullen.</li>
+        <li><strong>Huisdieren:</strong> Alleen toegestaan met schriftelijke toestemming van DOK74 Verhuur.</li>
+        <li><strong>Verbouwingen:</strong> Aanpassingen aan de woning vereisen altijd schriftelijke toestemming.</li>
+        <li><strong>Onderverhuur:</strong> Geheel of gedeeltelijk onderverhuren is niet toegestaan zonder toestemming.</li>
+        <li><strong>Afval:</strong> Scheid uw afval en gebruik de daarvoor bestemde containers.</li>
+        <li><strong>Roken:</strong> In gemeenschappelijke ruimtes is roken niet toegestaan.</li>
+        <li><strong>Overlast:</strong> Klachten over overlast van buren kunt u bij ons melden.</li>
+      </ul>
+      <p>Het volledige huishoudelijk reglement staat in uw huurpakket.</p>
+    `,
+  },
+  'contract-medehuurder': {
+    type: 'form', title: 'Medehuurder toevoegen',
+    intro: `Om een medehuurder toe te voegen hebben wij nodig:<ul style="margin:6px 0 0 16px;line-height:1.8"><li>Kopie geldig identiteitsbewijs van de medehuurder</li><li>Inkomensverklaring of werkgeversverklaring</li></ul><br>Stuur uw aanvraag via dit formulier. Wij nemen contact op over de verdere procedure.`,
+    fields: [
+      { id: 'naam',            label: 'Uw naam',                  type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',           label: 'E-mailadres',               type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon',        label: 'Telefoonnummer',            type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',           label: 'Adres van de woning',       type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'naam_medehuurder',label: 'Naam medehuurder',          type: 'text',     required: true, ph: 'Volledige naam medehuurder' },
+      { id: 'bericht',         label: 'Aanvullende informatie',    type: 'textarea', ph: 'Eventuele toelichting...' },
+    ],
+  },
+  'contract-looptijd': {
+    type: 'info', title: 'Looptijd & verlenging contract',
+    contactKey: 'contract-vraag',
+    html: `
+      <h3>Onbepaalde tijd</h3>
+      <p>De meeste contracten bij DOK74 Verhuur lopen voor onbepaalde tijd. Uw huurovereenkomst loopt automatisch door totdat u of DOK74 Verhuur schriftelijk opzegt.</p>
+      <h3>Tijdelijk contract</h3>
+      <p>Bij een tijdelijk contract (maximaal 2 jaar voor zelfstandige woningen) ontvangt u uiterlijk <strong>1 maand voor afloop</strong> een bericht over verlenging of beëindiging. Reageert u niet, dan eindigt het contract van rechtswege op de afgesproken datum.</p>
+      <h3>Jaarlijkse huurverhoging</h3>
+      <p>Per <strong>1 juli</strong> kan de huur worden verhoogd op basis van wettelijke maximumpercentages. U ontvangt minimaal <strong>3 maanden van tevoren</strong> een schriftelijke aankondiging.</p>
+      <div class="info-box">Wilt u weten wanneer uw contract afloopt of wat de actuele huurprijs is? Neem contact op via onderstaande knop.</div>
+    `,
+  },
+  'contract-vraag': {
+    type: 'form', title: 'Vraag over huurcontract',
+    fields: [
+      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'bericht',  label: 'Uw vraag',            type: 'textarea', required: true, ph: 'Waar kunnen wij u mee helpen?' },
+    ],
+  },
+
+  // ── BETALING SUB-MODALS ──────────────────────────────────────────────────
+  'betaling-factuur': {
+    type: 'form', title: 'Factuur of betaalbewijs opvragen',
+    intro: 'Heeft u een factuur of betaalbewijs nodig? Geef de periode of het factuurnummer op en we sturen het naar uw e-mailadres.',
+    fields: [
+      { id: 'naam',          label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',         label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'adres',         label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'factuurnummer', label: 'Factuurnummer of periode', type: 'text', ph: 'bijv. F2026-0042 of "januari 2026"' },
+      { id: 'bericht',       label: 'Aanvullende opmerking', type: 'textarea', ph: 'Optioneel...' },
+    ],
+  },
+  'betaling-huurprijs': {
+    type: 'info', title: 'Hoe is mijn huurprijs opgebouwd?',
+    contactKey: 'betaling-vraag',
+    html: `
+      <p>Uw maandelijkse huur bestaat uit twee onderdelen:</p>
+      <div class="info-box">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;gap:12px">
+          <span><strong>Kale huur</strong></span>
+          <span style="color:var(--grey-700);text-align:right">Vergoeding voor het gebruik van de woning zelf</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--grey-200);gap:12px">
+          <span><strong>Servicekosten (voorschot)</strong></span>
+          <span style="color:var(--grey-700);text-align:right">Gedeelde kosten en diensten</span>
+        </div>
+      </div>
+      <p>De <strong>kale huur</strong> is de basisprijs voor de woning. Deze kan jaarlijks per 1 juli worden verhoogd op basis van wettelijke maximumpercentages.</p>
+      <p>De <strong>servicekosten</strong> zijn een maandelijks voorschot op werkelijke kosten. Eenmaal per jaar ontvangt u een afrekening. Bij een positief saldo krijgt u geld terug; bij een tekort betaalt u het verschil bij.</p>
+      <p>De exacte samenstelling staat in uw huurovereenkomst.</p>
+    `,
+  },
+  'betaling-servicekosten': {
+    type: 'info', title: 'Servicekosten: wat betaal ik voor?',
+    contactKey: 'betaling-vraag',
+    html: `
+      <p>Servicekosten zijn een voorschot op kosten die DOK74 Verhuur maakt voor voorzieningen die alle huurders ten goede komen. Voorbeelden:</p>
+      <ul>
+        <li><strong>Energie gemeenschappelijke ruimtes</strong> — verlichting in gangen en trappenhuizen</li>
+        <li><strong>Schoonmaak</strong> — onderhoud van gezamenlijke ruimtes</li>
+        <li><strong>Liftonderhoud</strong> — inspectie en reparatie (indien aanwezig)</li>
+        <li><strong>Beheer</strong> — huismeester of beheerderskosten</li>
+        <li><strong>Glasverzekering</strong> — vervanging van ruiten bij breuk</li>
+        <li><strong>Tuinonderhoud</strong> — gemeenschappelijke buitenruimtes</li>
+      </ul>
+      <h3>Jaarlijkse afrekening</h3>
+      <p>U betaalt maandelijks een voorschot. Uiterlijk <strong>6 maanden na afloop van het servicekostenjaar</strong> ontvangt u een overzicht van de werkelijke kosten. U krijgt dan geld terug of betaalt het tekort bij.</p>
+      <div class="info-box">Wilt u een specificatie van uw huidige servicekosten? Vraag het op via de knop hieronder.</div>
+    `,
+  },
+  'betaling-methode': {
+    type: 'form', title: 'Betaalmethode of rekeningnummer wijzigen',
+    intro: 'Wijzig hier uw IBAN-rekeningnummer of betaalmethode. Verwerking vindt plaats voor de eerstvolgende betaaldatum.',
+    fields: [
+      { id: 'naam',         label: 'Naam',                   type: 'text',  required: true, ph: 'Uw volledige naam' },
+      { id: 'email',        label: 'E-mailadres',             type: 'email', required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon',     label: 'Telefoonnummer',          type: 'tel',   ph: '06 12345678' },
+      { id: 'adres',        label: 'Adres van uw woning',     type: 'text',  required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'huidig_iban',  label: 'Huidig rekeningnummer',   type: 'text',  ph: 'NL00 BANK 0000 0000 00' },
+      { id: 'nieuw_iban',   label: 'Nieuw rekeningnummer',    type: 'text',  required: true, ph: 'NL00 BANK 0000 0000 00' },
+      { id: 'ingangsdatum', label: 'Gewenste ingangsdatum',   type: 'date',  required: true },
+      { id: 'bericht',      label: 'Toelichting (optioneel)', type: 'textarea', ph: '' },
+    ],
+  },
+  'betaling-regeling': {
+    type: 'form', title: 'Betalingsregeling aanvragen',
+    intro: 'Lukt het tijdelijk niet om de huur te betalen? Neem zo vroeg mogelijk contact op — hoe eerder we weten wat er speelt, hoe beter we kunnen helpen. Aanvragen worden vertrouwelijk behandeld.',
+    fields: [
+      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'bericht',  label: 'Uw situatie en verzoek', type: 'textarea', required: true, ph: 'Omschrijf kort uw situatie en wat u nodig heeft...' },
+    ],
+  },
+  'betaling-aanmaning': {
+    type: 'info', title: 'Betaald maar toch een aanmaning?',
+    contactKey: 'betaling-aanmaning-form',
+    html: `
+      <p>Het kan voorkomen dat een aanmaning en uw betaling elkaar kruisen. Controleer eerst het volgende:</p>
+      <ol>
+        <li>Is uw betaling <strong>na de vervaldatum</strong> op de aanmaning gedaan?</li>
+        <li>Heeft u de juiste <strong>betalingsomschrijving</strong> gebruikt (bijv. uw huurnummer)?</li>
+        <li>Is het bedrag overgemaakt naar het <strong>juiste rekeningnummer</strong> van DOK74?</li>
+        <li>Is uw betaling misschien vertraagd door een <strong>weekend of feestdag</strong>?</li>
+      </ol>
+      <p>Betalingen worden doorgaans binnen <strong>1–2 werkdagen</strong> verwerkt. Als u langer dan 3 werkdagen geleden heeft betaald en de aanmaning blijft staan, neem dan contact op.</p>
+    `,
+  },
+  'betaling-aanmaning-form': {
+    type: 'form', title: 'Aanmaning melden',
+    intro: 'Stuur ons de details van uw betaling, dan zoeken we het voor u uit.',
+    fields: [
+      { id: 'naam',       label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',      label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon',   label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',      label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'betaaldatum',label: 'Datum van uw betaling', type: 'date',   required: true },
+      { id: 'bedrag',     label: 'Betaald bedrag',      type: 'text',     required: true, ph: 'bijv. € 895,00' },
+      { id: 'bericht',    label: 'Toelichting',         type: 'textarea', required: true, ph: 'Via welke bank en naar welk rekeningnummer heeft u betaald?' },
+    ],
+  },
+  'betaling-vraag': {
+    type: 'form', title: 'Vraag over betaling of facturen',
+    fields: [
+      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
+      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
+      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
+      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
+      { id: 'bericht',  label: 'Uw vraag',            type: 'textarea', required: true, ph: 'Waar kunnen wij u mee helpen?' },
+    ],
+  },
+};
+
+// ─── STATE & HELPERS ─────────────────────────────────────────────────────────
+let currentScreen = 'home';
+let currentModalKey = null;
+
+const backdrop     = document.getElementById('modal-backdrop');
+const modalTitle   = document.getElementById('modal-title');
+const modalBody    = document.getElementById('modal-body');
+const modalSuccess = document.getElementById('modal-success');
+
+// ─── SCREEN NAVIGATION ───────────────────────────────────────────────────────
+function showScreen(id) {
+  currentScreen = id;
+  const screen = SCREENS[id];
+
+  // Breadcrumb
+  const bc = document.getElementById('breadcrumb');
+  const bcTitle = document.getElementById('breadcrumb-title');
+  if (id === 'home') {
+    bc.style.display = 'none';
+  } else {
+    bc.style.display = 'flex';
+    bcTitle.textContent = screen.title;
+  }
+
+  // Emergency banner
+  document.getElementById('emergency-banner').style.display = screen.emergency ? 'flex' : 'none';
+
+  // Section label
+  document.getElementById('section-label').textContent = screen.label;
+
+  // Render tiles
+  const grid = document.getElementById('tiles-grid');
+  grid.innerHTML = '';
+  screen.tiles.forEach(tile => {
+    const btn = document.createElement('button');
+    btn.className = 'tile';
+    btn.onclick = () => handleTile(tile);
+    btn.innerHTML = `
+      <div class="tile-icon ${tile.color}">${IC[tile.icon]}</div>
+      <div class="tile-body">
+        <div class="tile-title">${tile.title}</div>
+        <div class="tile-desc">${tile.desc}</div>
+      </div>
+      ${IC.arrow.replace('viewBox', 'class="tile-arrow" viewBox')}
+    `;
+    grid.appendChild(btn);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function handleTile(tile) {
+  if (tile.action.type === 'screen') {
+    showScreen(tile.action.key);
+  } else if (tile.action.type === 'page') {
+    window.location.href = tile.action.url;
+  } else {
+    openModal(tile.action.key);
+  }
+}
+
+document.getElementById('back-btn').onclick = () => {
+  const parent = SCREENS[currentScreen]?.parent || 'home';
+  showScreen(parent);
+};
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function openModal(key) {
+  currentModalKey = key;
+  const m = MODALS[key];
+  if (!m) return;
+
+  modalTitle.textContent = m.title;
+  modalSuccess.style.display = 'none';
+  modalBody.style.display = '';
+  modalBody.innerHTML = '';
+
+  if (m.type === 'info') {
+    renderInfo(m);
+  } else {
+    renderForm(m);
+  }
+
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderInfo(m) {
+  const div = document.createElement('div');
+  div.className = 'info-content';
+  div.innerHTML = m.html;
+  modalBody.appendChild(div);
+
+  if (m.contactKey) {
+    const btn = document.createElement('button');
+    btn.className = 'info-contact-btn';
+    btn.innerHTML = `<span>Heeft u nog een vraag? Neem contact op</span>${IC.arrow}`;
+    btn.onclick = () => openModal(m.contactKey);
+    modalBody.appendChild(btn);
+  }
+}
+
+function renderForm(m) {
+  if (m.note) {
+    const note = document.createElement('div');
+    note.className = 'form-intro';
+    note.style.background = 'var(--yellow-soft)';
+    note.style.borderLeft = '3px solid var(--yellow)';
+    note.style.padding = '10px 14px';
+    note.style.borderRadius = '0 var(--radius-sm) var(--radius-sm) 0';
+    note.style.marginBottom = '18px';
+    note.innerHTML = m.note;
+    modalBody.appendChild(note);
+  }
+
+  if (m.intro) {
+    const intro = document.createElement('div');
+    intro.className = 'form-intro';
+    intro.innerHTML = m.intro;
+    modalBody.appendChild(intro);
+  }
+
+  const form = document.createElement('form');
+  form.id = 'modal-form';
+  form.noValidate = true;
+
+  const hasOptionalContact = m.contactOptional &&
+    m.fields.some(f => f.id === 'email' || f.id === 'telefoon');
+
+  m.fields.forEach(f => {
+    const group = document.createElement('div');
+    group.className = 'form-group';
+
+    const label = document.createElement('label');
+    label.setAttribute('for', `f-${f.id}`);
+    label.innerHTML = f.label + (f.required ? ' <span class="req">*</span>' : '');
+    group.appendChild(label);
+
+    if (hasOptionalContact && f.id === 'email') {
+      const hint = document.createElement('p');
+      hint.className = 'form-contact-hint';
+      hint.textContent = 'Vul minimaal één contactgegeven in zodat we u kunnen bereiken.';
+      group.appendChild(hint);
+    }
+
+    let input;
+    if (f.type === 'textarea') {
+      input = document.createElement('textarea');
+      input.rows = 4;
+    } else if (f.type === 'select') {
+      input = document.createElement('select');
+      const def = document.createElement('option');
+      def.value = ''; def.textContent = '— Maak een keuze —';
+      input.appendChild(def);
+      f.options.forEach(o => {
+        const opt = document.createElement('option');
+        opt.value = o; opt.textContent = o;
+        input.appendChild(opt);
+      });
+    } else {
+      input = document.createElement('input');
+      input.type = f.type;
+    }
+
+    input.id = `f-${f.id}`;
+    input.name = f.id;
+    if (f.ph) input.placeholder = f.ph;
+    if (f.required) input.required = true;
+
+    group.appendChild(input);
+    form.appendChild(group);
+  });
+
+  const btn = document.createElement('button');
+  btn.type = 'submit';
+  btn.className = 'btn-primary';
+  btn.id = 'modal-submit';
+  btn.textContent = 'Versturen';
+  form.appendChild(btn);
+
+  form.addEventListener('submit', handleFormSubmit);
+  modalBody.appendChild(form);
+}
+
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  clearError();
+
+  const m = MODALS[currentModalKey];
+  const fields = {};
+  m.fields.forEach(f => {
+    const el = document.getElementById(`f-${f.id}`);
+    if (el) fields[f.id] = el.value.trim();
+  });
+
+  if (m.contactOptional) {
+    if (!fields.email && !fields.telefoon) {
+      showError('Vul uw e-mailadres of telefoonnummer in zodat we u kunnen bereiken.');
+      return;
+    }
+  }
+
+  const submitBtn = document.getElementById('modal-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Bezig met versturen…';
+
+  try {
+    const resp = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ category: currentModalKey, fields }),
+    });
+    const result = await resp.json();
+    if (result.ok) {
+      modalBody.style.display = 'none';
+      modalSuccess.style.display = '';
+    } else {
+      showError(result.error || 'Er is iets misgegaan. Probeer het opnieuw.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Versturen';
+    }
+  } catch {
+    showError('Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Versturen';
+  }
+}
+
+function showError(msg) {
+  clearError();
+  const err = document.createElement('p');
+  err.id = 'form-error';
+  err.className = 'form-error';
+  err.textContent = msg;
+  const form = document.getElementById('modal-form');
+  if (form) form.prepend(err);
+}
+
+function clearError() {
+  const e = document.getElementById('form-error');
+  if (e) e.remove();
+}
+
+function closeModal() {
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').onclick = closeModal;
+backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal(); });
+document.getElementById('send-another').onclick = () => openModal(currentModalKey);
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+showScreen('home');
+</script>
+</body>
+</html>
