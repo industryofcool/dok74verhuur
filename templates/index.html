@@ -31,6 +31,7 @@
       color: var(--grey-900);
       min-height: 100vh;
     }
+    html { background: var(--white); }
 
     /* ── HEADER ── */
     header {
@@ -151,119 +152,15 @@
     .ic-rose   { background: #FFF1F2; } .ic-rose   svg { color: #E11D48; }
 
     /* ── MODAL ── */
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,.45);
-      display: flex; align-items: center; justify-content: center; padding: 20px;
-      z-index: 200; opacity: 0; pointer-events: none; transition: opacity .2s ease;
-    }
-    .modal-backdrop.open { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: var(--white); border-radius: 16px;
-      width: 100%; max-width: 540px; max-height: 92vh; overflow-y: auto;
-      padding: 32px; position: relative; box-shadow: var(--shadow-lg);
-      transform: translateY(16px) scale(.98); transition: transform .2s ease;
-    }
-    .modal-backdrop.open .modal-box { transform: translateY(0) scale(1); }
-    .modal-close {
-      position: absolute; top: 16px; right: 18px;
-      background: var(--grey-100); border: none; border-radius: 50%;
-      width: 32px; height: 32px; font-size: 1.2rem; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--grey-700); transition: background .15s;
-    }
-    .modal-close:hover { background: var(--grey-200); }
-    .modal-title { font-size: 1.2rem; font-weight: 800; color: var(--grey-900); margin-bottom: 16px; padding-right: 36px; }
-
-    /* ── INFO CONTENT ── */
-    .info-content { font-size: .88rem; color: var(--grey-700); line-height: 1.7; }
-    .info-content p { margin-bottom: 10px; }
-    .info-content ul, .info-content ol { margin: 8px 0 12px 18px; }
-    .info-content li { margin-bottom: 5px; }
-    .info-content strong { color: var(--grey-900); }
-    .info-content h3 { font-size: .92rem; margin: 16px 0 7px; color: var(--grey-900); }
-    .info-box {
-      background: var(--grey-100); border-radius: var(--radius-sm);
-      padding: 14px 16px; margin: 14px 0; font-size: .85rem; color: var(--grey-700);
-    }
-    .info-contact-btn {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--yellow-soft); border: 1px solid #E8D800;
-      border-radius: var(--radius-sm); padding: 13px 16px; margin-top: 20px;
-      cursor: pointer; font: inherit; width: 100%;
-      transition: background .15s;
-    }
-    .info-contact-btn:hover { background: #FFF3A0; }
-    .info-contact-btn span { font-size: .88rem; font-weight: 600; color: var(--grey-900); }
-    .info-contact-btn svg { color: var(--grey-500); flex-shrink: 0; }
-
-    /* ── FORM ── */
-    .form-intro {
-      font-size: .86rem; color: var(--grey-700); line-height: 1.65;
-      margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--grey-200);
-    }
-    .form-intro p { margin-bottom: 8px; }
-    .form-intro ul { margin: 6px 0 8px 16px; }
-    .form-intro li { margin-bottom: 4px; }
-    .form-intro strong { color: var(--grey-900); }
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--grey-700); margin-bottom: 4px; }
-    .form-group label .req { color: var(--red); margin-left: 2px; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; padding: 9px 11px; font-size: .88rem; font-family: inherit;
-      color: var(--grey-900); background: var(--white);
-      border: 1.5px solid var(--grey-200); border-radius: var(--radius-sm);
-      outline: none; transition: border-color .15s, box-shadow .15s; appearance: none;
-    }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-      border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(245,201,0,.18);
-    }
-    .form-group textarea { resize: vertical; min-height: 88px; }
-    .form-contact-hint { font-size: .76rem; color: var(--grey-500); margin: -8px 0 12px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
-    .form-error {
-      background: var(--red-soft); border: 1px solid var(--red-border);
-      border-radius: var(--radius-sm); color: var(--red);
-      font-size: .83rem; padding: 9px 13px; margin-bottom: 14px;
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--yellow); color: var(--grey-900); border: none;
-      border-radius: var(--radius-sm); padding: 11px 26px;
-      font-size: .92rem; font-weight: 700; font-family: inherit; cursor: pointer;
-      transition: background .15s, transform .12s; width: 100%; margin-top: 4px;
-    }
-    .btn-primary:hover:not(:disabled) { background: var(--yellow-dark); transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: .55; cursor: default; }
-    .btn-outline {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      background: transparent; color: var(--grey-700); border: 1.5px solid var(--grey-200);
-      border-radius: var(--radius-sm); padding: 10px 26px;
-      font-size: .88rem; font-weight: 600; font-family: inherit; cursor: pointer;
-      transition: border-color .15s, background .15s; width: 100%; margin-top: 10px;
-    }
-    .btn-outline:hover { border-color: var(--yellow); background: var(--yellow-soft); }
-
-    /* ── SUCCESS ── */
-    .modal-success { text-align: center; padding: 8px 0; }
-    .success-circle {
-      width: 64px; height: 64px; background: #ECFDF5; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
-    }
-    .success-circle svg { width: 30px; height: 30px; color: #059669; }
-    .modal-success h3 { font-size: 1.1rem; font-weight: 800; color: var(--grey-900); margin-bottom: 8px; }
-    .modal-success p { font-size: .86rem; color: var(--grey-500); line-height: 1.6; margin-bottom: 22px; }
-
     /* ── FOOTER ── */
     footer {
-      text-align: center; padding: 22px 20px; font-size: .76rem;
-      color: var(--grey-500); border-top: 1px solid var(--grey-200); background: var(--white);
+      text-align: center; padding: 28px 20px; font-size: .84rem;
+      color: var(--grey-700); border-top: 2px solid var(--yellow); background: var(--white);
     }
-    footer a { color: inherit; }
+    footer a { color: var(--grey-900); font-weight: 500; }
 
     @media (max-width: 480px) {
       .hero { padding: 24px 16px 20px; }
-      .modal-box { padding: 24px 18px; }
     }
   </style>
 </head>
@@ -285,7 +182,7 @@
     </div>
     <div class="hero-text">
       <h1><span class="h1-prefix">Welkom bij</span><span>DOK74</span> Verhuur</h1>
-      <p>Waarmee kunnen wij u helpen? Kies hieronder uw onderwerp en we begeleiden u naar de juiste informatie of het juiste formulier.</p>
+      <p>DOK74 Verhuur beheert het vastgoed voor Jelsma Vastgoed Beheer B.V. en WMVG Verhuur. Waarmee kunnen wij u helpen? Kies hieronder uw onderwerp.</p>
     </div>
   </div>
 </section>
@@ -309,7 +206,7 @@
     </div>
     <div class="emergency-body">
       <strong>Spoed — lekkage, brand of inbraak?</strong>
-      <span>Bel direct onze spoedlijn: <a href="tel:0854011736">085 401 1736</a> (24/7 bereikbaar)</span>
+      <span>Bel direct: <a href="tel:0854011736">085 401 1736</a> (bereikbaar tijdens kantooruren, bij acute noodsituaties 24/7)</span>
     </div>
   </div>
 </main>
@@ -321,23 +218,6 @@
   <a href="https://www.facebook.com/DOK74VERHUUR" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a> &nbsp;&middot;&nbsp;
   <a href="https://www.instagram.com/dok74verhuur/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>Instagram</a>
 </footer>
-
-<div id="modal-backdrop" class="modal-backdrop">
-  <div class="modal-box">
-    <button class="modal-close" id="modal-close">&times;</button>
-    <h2 class="modal-title" id="modal-title"></h2>
-    <div id="modal-body"></div>
-    <div id="modal-success" class="modal-success" style="display:none">
-      <div class="success-circle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <h3>Bericht ontvangen!</h3>
-      <p>Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.</p>
-      <button type="button" class="btn-primary" onclick="closeModal()">Sluiten</button>
-      <button type="button" class="btn-outline" id="send-another">Nog een bericht sturen</button>
-    </div>
-  </div>
-</div>
 
 <script>
 // ─── SVG ICONS ──────────────────────────────────────────────────────────────
@@ -373,12 +253,12 @@ const SCREENS = {
     tiles: [
       { title: 'Inschrijven voor woningaanbod', desc: 'Schrijf u in en ontvang bericht als er iets passends beschikbaar komt.', color: 'ic-amber', icon: 'bell', action: { type: 'page', url: '/inschrijven' } },
       { title: 'Reparatie melden',           desc: 'Iets stuk of kapot in uw woning? Meld het hier.',       color: 'ic-blue',   icon: 'wrench',   action: { type: 'page', url: '/reparatie' } },
-      { title: 'Huurcontract & documenten',  desc: 'Contract, opzegging, adreswijziging en huisregels.',    color: 'ic-purple', icon: 'filetext', action: { type: 'screen', key: 'contract' } },
-      { title: 'Betaling & facturen',        desc: 'Huurprijs, servicekosten, facturen en betalingen.',     color: 'ic-green',  icon: 'card',     action: { type: 'screen', key: 'betaling' } },
-      { title: 'Sleutels & toegang',         desc: 'Extra sleutel, sleutel kwijt of pas defect.',           color: 'ic-amber',  icon: 'key',      action: { type: 'modal', key: 'sleutels' } },
-      { title: 'Klacht indienen',            desc: 'Niet tevreden? Laat het ons weten.',                    color: 'ic-red',    icon: 'chat',     action: { type: 'modal', key: 'klacht' } },
-      { title: 'Contact opnemen',            desc: 'Stel een vraag of stuur ons een bericht.',              color: 'ic-teal',   icon: 'phone',    action: { type: 'modal', key: 'contact' } },
-      { title: 'App ons via WhatsApp',      desc: 'Stuur ons direct een WhatsApp-bericht.',                color: 'ic-green',  icon: 'whatsapp', action: { type: 'external', url: 'https://wa.me/31854011736' } },
+      { title: 'Storingen',                   desc: 'Geen water, stroom of internet? Kijk wat u kunt doen.', color: 'ic-red',    icon: 'alert',    action: { type: 'page', url: '/storingen' } },
+      { title: 'Huurcontract & documenten',  desc: 'Contract, opzegging, huisregels en meer.',              color: 'ic-purple', icon: 'filetext', action: { type: 'screen', key: 'contract' } },
+      { title: 'Sleutels & toegang',         desc: 'Extra sleutel, sleutel kwijt of pas defect.',           color: 'ic-amber',  icon: 'key',      action: { type: 'page', url: '/formulier/sleutels' } },
+      { title: 'Overlast melden',            desc: 'Klachten over overlast van buren kunt u bij ons melden.', color: 'ic-rose', icon: 'alert', action: { type: 'page', url: '/formulier/overlast' } },
+      { title: 'Laat ons weten hoe het beter kan', desc: 'Niet tevreden? Wij horen het graag.',               color: 'ic-red',    icon: 'chat',     action: { type: 'page', url: '/formulier/klacht' } },
+      { title: 'Contact opnemen',            desc: 'Bel, WhatsApp of stuur ons een bericht.',               color: 'ic-teal',   icon: 'phone',    action: { type: 'page', url: '/contact' } },
     ],
   },
   contract: {
@@ -386,292 +266,17 @@ const SCREENS = {
     title: 'Huurcontract & documenten',
     label: 'Wat heeft u nodig?',
     tiles: [
-      { title: 'Kopie huurcontract opvragen',    desc: 'Vraag een digitale kopie van uw contract aan.',         color: 'ic-purple', icon: 'download', action: { type: 'modal', key: 'contract-kopie' } },
-      { title: 'Huurovereenkomst opzeggen',      desc: 'Informatie over opzeggen en het indienen van uw opzegging.', color: 'ic-red',    icon: 'xcirc',    action: { type: 'modal', key: 'contract-opzeggen' } },
-      { title: 'Adreswijziging doorgeven',       desc: 'Geef uw nieuwe correspondentieadres door.',             color: 'ic-teal',   icon: 'mappin',   action: { type: 'modal', key: 'contract-adres' } },
-      { title: 'Huisregels & afspraken',         desc: 'Bekijk de regels die gelden in en rondom uw woning.',   color: 'ic-indigo', icon: 'book',     action: { type: 'modal', key: 'contract-huisregels' } },
-      { title: 'Medehuurder toevoegen',          desc: 'Voeg een partner of medebewoner toe aan uw contract.',  color: 'ic-green',  icon: 'userplus', action: { type: 'modal', key: 'contract-medehuurder' } },
-      { title: 'Looptijd & verlenging',          desc: 'Alles over de duur van uw contract en verlenging.',     color: 'ic-amber',  icon: 'calendar', action: { type: 'modal', key: 'contract-looptijd' } },
-    ],
-  },
-  betaling: {
-    parent: 'home',
-    title: 'Betaling & facturen',
-    label: 'Wat heeft u nodig?',
-    tiles: [
-      { title: 'Factuur of betaalbewijs opvragen', desc: 'Vraag een factuur of betaalbewijs op voor een periode.',  color: 'ic-green',  icon: 'receipt',  action: { type: 'modal', key: 'betaling-factuur' } },
-      { title: 'Hoe is mijn huurprijs opgebouwd?', desc: 'Uitleg over kale huur, servicekosten en andere posten.',  color: 'ic-blue',   icon: 'info',     action: { type: 'modal', key: 'betaling-huurprijs' } },
-      { title: 'Servicekosten: wat betaal ik voor?', desc: 'Wat valt er onder uw servicekosten en hoe werkt de afrekening?', color: 'ic-indigo', icon: 'list',   action: { type: 'modal', key: 'betaling-servicekosten' } },
-      { title: 'Betaalmethode wijzigen',           desc: 'Wijzig uw rekeningnummer of betaalmethode.',              color: 'ic-amber',  icon: 'refresh',  action: { type: 'modal', key: 'betaling-methode' } },
-      { title: 'Betalingsregeling aanvragen',      desc: 'Lukt het tijdelijk niet? We denken graag mee.',           color: 'ic-teal',   icon: 'clock',    action: { type: 'modal', key: 'betaling-regeling' } },
-      { title: 'Betaald maar aanmaning gekregen',  desc: 'Uw betaling is gedaan maar u ontvangt toch een aanmaning.', color: 'ic-rose',  icon: 'alert',    action: { type: 'modal', key: 'betaling-aanmaning' } },
+      { title: 'Vraag over uw huurcontract',     desc: 'Stel een vraag over uw huurovereenkomst.',              color: 'ic-purple', icon: 'filetext', action: { type: 'page', url: '/formulier/contract-vraag' } },
+      { title: 'Huurovereenkomst opzeggen',      desc: 'Informatie over opzeggen en het indienen van uw opzegging.', color: 'ic-red',    icon: 'xcirc',    action: { type: 'page', url: '/formulier/contract-opzeggen' } },
+      { title: 'Huisregels & afspraken',         desc: 'Bekijk de regels die gelden in en rondom uw woning.',   color: 'ic-indigo', icon: 'book',     action: { type: 'page', url: '/info/huisregels' } },
+      { title: 'Verzoek tot medehuurder',        desc: 'Dien een verzoek in om een medehuurder toe te voegen.', color: 'ic-green',  icon: 'userplus', action: { type: 'page', url: '/formulier/contract-medehuurder' } },
+      { title: 'Looptijd & verlenging',          desc: 'Informatie opvragen over de duur en verlenging van uw contract.', color: 'ic-amber',  icon: 'calendar', action: { type: 'page', url: '/info/looptijd' } },
     ],
   },
 };
 
-// ─── MODAL CONTENT ──────────────────────────────────────────────────────────
-const MODALS = {
-  // ── HOOFDCATEGORIEËN (formulieren) ──────────────────────────────────────
-  'reparatie': {
-    type: 'form', title: 'Reparatie melden',
-    note: 'Bij spoed buiten kantoortijden: bel <strong>085 401 1736</strong> (24/7 bereikbaar).',
-    contactOptional: true,
-    fields: [
-      { id: 'naam',     label: 'Naam',                  type: 'text',     required: true,  ph: 'Uw volledige naam' },
-      { id: 'email',    label: 'E-mailadres',            type: 'email',    ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon', label: 'Telefoonnummer',         type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',    label: 'Adres van uw woning',    type: 'text',     required: true,  ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'urgentie', label: 'Urgentie',               type: 'select',   required: true,
-        options: ['Normaal — binnen enkele werkdagen', 'Spoed — zo snel mogelijk'] },
-      { id: 'bericht',  label: 'Omschrijf het probleem', type: 'textarea', required: true,  ph: 'Beschrijf zo duidelijk mogelijk wat er aan de hand is...' },
-    ],
-  },
-  'sleutels': {
-    type: 'form', title: 'Sleutels & toegang',
-    contactOptional: true,
-    fields: [
-      { id: 'naam',          label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',         label: 'E-mailadres',         type: 'email',    ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon',      label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',         label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'type_aanvraag', label: 'Soort aanvraag',      type: 'select',   required: true,
-        options: ['Extra sleutel aanvragen', 'Sleutel kwijt / verloren', 'Toegangspas defect', 'Anders'] },
-      { id: 'bericht',       label: 'Toelichting',         type: 'textarea', required: true, ph: 'Aanvullende informatie...' },
-    ],
-  },
-  'klacht': {
-    type: 'form', title: 'Klacht indienen',
-    fields: [
-      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'bericht',  label: 'Omschrijf uw klacht', type: 'textarea', required: true, ph: 'Vertel ons wat er is misgegaan...' },
-    ],
-  },
-  'contact': {
-    type: 'form', title: 'Contact opnemen',
-    contactOptional: true,
-    fields: [
-      { id: 'naam',     label: 'Naam',                                    type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',    label: 'E-mailadres',                              type: 'email',    ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon', label: 'Telefoonnummer',                           type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',    label: 'Adres van uw woning (indien van toepassing)', type: 'text', ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'bericht',  label: 'Uw bericht',                               type: 'textarea', required: true, ph: 'Hoe kunnen wij u helpen?' },
-    ],
-  },
-
-  // ── CONTRACT SUB-MODALS ──────────────────────────────────────────────────
-  'contract-kopie': {
-    type: 'form', title: 'Kopie huurcontract opvragen',
-    intro: 'Vraag hier een digitale kopie aan van uw huurovereenkomst. Wij verwerken uw aanvraag binnen <strong>2 werkdagen</strong> en sturen de kopie naar uw e-mailadres.',
-    fields: [
-      { id: 'naam',    label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',   label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'adres',   label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'bericht', label: 'Aanvullende opmerking (optioneel)', type: 'textarea', ph: 'Bijv. specifieke bijlage of versie' },
-    ],
-  },
-  'contract-opzeggen': {
-    type: 'form', title: 'Huurovereenkomst opzeggen',
-    intro: `De opzegtermijn bedraagt <strong>1 kalendermaand</strong>. Uw opzegging moet uiterlijk op de <strong>1e van de maand</strong> door ons zijn ontvangen om die maand nog in te gaan.<br><br><em>Voorbeeld: opzegging ontvangen op 15 april → huurovereenkomst eindigt op 31 mei.</em>`,
-    fields: [
-      { id: 'naam',          label: 'Naam',                  type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',         label: 'E-mailadres',            type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon',      label: 'Telefoonnummer',         type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',         label: 'Adres van uw woning',    type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'einddatum',     label: 'Gewenste einddatum',     type: 'date',     required: true },
-      { id: 'bericht',       label: 'Aanvullende toelichting', type: 'textarea', ph: 'Optionele toelichting...' },
-    ],
-  },
-  'contract-adres': {
-    type: 'form', title: 'Adreswijziging doorgeven',
-    intro: 'Geef hier uw nieuwe correspondentieadres door. Vergeet ook niet uw adres te wijzigen bij de gemeente (BRP).',
-    fields: [
-      { id: 'naam',        label: 'Naam',                        type: 'text',  required: true, ph: 'Uw volledige naam' },
-      { id: 'email',       label: 'E-mailadres',                  type: 'email', required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'adres',       label: 'Huidig adres (huurwoning)',    type: 'text',  required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'nieuw_adres', label: 'Nieuw correspondentieadres',   type: 'text',  required: true, ph: 'Nieuwe straat 1, Stad' },
-      { id: 'ingangsdatum',label: 'Ingangsdatum',                 type: 'date',  required: true },
-      { id: 'bericht',     label: 'Toelichting (optioneel)',      type: 'textarea', ph: '' },
-    ],
-  },
-  'contract-huisregels': {
-    type: 'info', title: 'Huisregels & afspraken',
-    contactKey: 'contract-vraag',
-    html: `
-      <p>Voor een prettige woonomgeving gelden de volgende regels:</p>
-      <ul>
-        <li><strong>Geluidsoverlast:</strong> Vermijd geluidsoverlast tussen 22:00 en 08:00.</li>
-        <li><strong>Gemeenschappelijke ruimtes:</strong> Gangen, trappenhuizen en bergingen dienen vrij te blijven van privéspullen.</li>
-        <li><strong>Huisdieren:</strong> Alleen toegestaan met schriftelijke toestemming van DOK74 Verhuur.</li>
-        <li><strong>Verbouwingen:</strong> Aanpassingen aan de woning vereisen altijd schriftelijke toestemming.</li>
-        <li><strong>Onderverhuur:</strong> Geheel of gedeeltelijk onderverhuren is niet toegestaan zonder toestemming.</li>
-        <li><strong>Afval:</strong> Scheid uw afval en gebruik de daarvoor bestemde containers.</li>
-        <li><strong>Roken:</strong> In gemeenschappelijke ruimtes is roken niet toegestaan.</li>
-        <li><strong>Overlast:</strong> Klachten over overlast van buren kunt u bij ons melden.</li>
-      </ul>
-      <p>Het volledige huishoudelijk reglement staat in uw huurpakket.</p>
-    `,
-  },
-  'contract-medehuurder': {
-    type: 'form', title: 'Medehuurder toevoegen',
-    intro: `Om een medehuurder toe te voegen hebben wij nodig:<ul style="margin:6px 0 0 16px;line-height:1.8"><li>Kopie geldig identiteitsbewijs van de medehuurder</li><li>Inkomensverklaring of werkgeversverklaring</li></ul><br>Stuur uw aanvraag via dit formulier. Wij nemen contact op over de verdere procedure.`,
-    fields: [
-      { id: 'naam',            label: 'Uw naam',                  type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',           label: 'E-mailadres',               type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon',        label: 'Telefoonnummer',            type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',           label: 'Adres van de woning',       type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'naam_medehuurder',label: 'Naam medehuurder',          type: 'text',     required: true, ph: 'Volledige naam medehuurder' },
-      { id: 'bericht',         label: 'Aanvullende informatie',    type: 'textarea', ph: 'Eventuele toelichting...' },
-    ],
-  },
-  'contract-looptijd': {
-    type: 'info', title: 'Looptijd & verlenging contract',
-    contactKey: 'contract-vraag',
-    html: `
-      <h3>Onbepaalde tijd</h3>
-      <p>De meeste contracten bij DOK74 Verhuur lopen voor onbepaalde tijd. Uw huurovereenkomst loopt automatisch door totdat u of DOK74 Verhuur schriftelijk opzegt.</p>
-      <h3>Tijdelijk contract</h3>
-      <p>Bij een tijdelijk contract (maximaal 2 jaar voor zelfstandige woningen) ontvangt u uiterlijk <strong>1 maand voor afloop</strong> een bericht over verlenging of beëindiging. Reageert u niet, dan eindigt het contract van rechtswege op de afgesproken datum.</p>
-      <h3>Jaarlijkse huurverhoging</h3>
-      <p>Per <strong>1 juli</strong> kan de huur worden verhoogd op basis van wettelijke maximumpercentages. U ontvangt minimaal <strong>3 maanden van tevoren</strong> een schriftelijke aankondiging.</p>
-      <div class="info-box">Wilt u weten wanneer uw contract afloopt of wat de actuele huurprijs is? Neem contact op via onderstaande knop.</div>
-    `,
-  },
-  'contract-vraag': {
-    type: 'form', title: 'Vraag over huurcontract',
-    fields: [
-      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'bericht',  label: 'Uw vraag',            type: 'textarea', required: true, ph: 'Waar kunnen wij u mee helpen?' },
-    ],
-  },
-
-  // ── BETALING SUB-MODALS ──────────────────────────────────────────────────
-  'betaling-factuur': {
-    type: 'form', title: 'Factuur of betaalbewijs opvragen',
-    intro: 'Heeft u een factuur of betaalbewijs nodig? Geef de periode of het factuurnummer op en we sturen het naar uw e-mailadres.',
-    fields: [
-      { id: 'naam',          label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',         label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'adres',         label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'factuurnummer', label: 'Factuurnummer of periode', type: 'text', ph: 'bijv. F2026-0042 of "januari 2026"' },
-      { id: 'bericht',       label: 'Aanvullende opmerking', type: 'textarea', ph: 'Optioneel...' },
-    ],
-  },
-  'betaling-huurprijs': {
-    type: 'info', title: 'Hoe is mijn huurprijs opgebouwd?',
-    contactKey: 'betaling-vraag',
-    html: `
-      <p>Uw maandelijkse huur bestaat uit twee onderdelen:</p>
-      <div class="info-box">
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px;gap:12px">
-          <span><strong>Kale huur</strong></span>
-          <span style="color:var(--grey-700);text-align:right">Vergoeding voor het gebruik van de woning zelf</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--grey-200);gap:12px">
-          <span><strong>Servicekosten (voorschot)</strong></span>
-          <span style="color:var(--grey-700);text-align:right">Gedeelde kosten en diensten</span>
-        </div>
-      </div>
-      <p>De <strong>kale huur</strong> is de basisprijs voor de woning. Deze kan jaarlijks per 1 juli worden verhoogd op basis van wettelijke maximumpercentages.</p>
-      <p>De <strong>servicekosten</strong> zijn een maandelijks voorschot op werkelijke kosten. Eenmaal per jaar ontvangt u een afrekening. Bij een positief saldo krijgt u geld terug; bij een tekort betaalt u het verschil bij.</p>
-      <p>De exacte samenstelling staat in uw huurovereenkomst.</p>
-    `,
-  },
-  'betaling-servicekosten': {
-    type: 'info', title: 'Servicekosten: wat betaal ik voor?',
-    contactKey: 'betaling-vraag',
-    html: `
-      <p>Servicekosten zijn een voorschot op kosten die DOK74 Verhuur maakt voor voorzieningen die alle huurders ten goede komen. Voorbeelden:</p>
-      <ul>
-        <li><strong>Energie gemeenschappelijke ruimtes</strong> — verlichting in gangen en trappenhuizen</li>
-        <li><strong>Schoonmaak</strong> — onderhoud van gezamenlijke ruimtes</li>
-        <li><strong>Liftonderhoud</strong> — inspectie en reparatie (indien aanwezig)</li>
-        <li><strong>Beheer</strong> — huismeester of beheerderskosten</li>
-        <li><strong>Glasverzekering</strong> — vervanging van ruiten bij breuk</li>
-        <li><strong>Tuinonderhoud</strong> — gemeenschappelijke buitenruimtes</li>
-      </ul>
-      <h3>Jaarlijkse afrekening</h3>
-      <p>U betaalt maandelijks een voorschot. Uiterlijk <strong>6 maanden na afloop van het servicekostenjaar</strong> ontvangt u een overzicht van de werkelijke kosten. U krijgt dan geld terug of betaalt het tekort bij.</p>
-      <div class="info-box">Wilt u een specificatie van uw huidige servicekosten? Vraag het op via de knop hieronder.</div>
-    `,
-  },
-  'betaling-methode': {
-    type: 'form', title: 'Betaalmethode of rekeningnummer wijzigen',
-    intro: 'Wijzig hier uw IBAN-rekeningnummer of betaalmethode. Verwerking vindt plaats voor de eerstvolgende betaaldatum.',
-    fields: [
-      { id: 'naam',         label: 'Naam',                   type: 'text',  required: true, ph: 'Uw volledige naam' },
-      { id: 'email',        label: 'E-mailadres',             type: 'email', required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon',     label: 'Telefoonnummer',          type: 'tel',   ph: '06 12345678' },
-      { id: 'adres',        label: 'Adres van uw woning',     type: 'text',  required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'huidig_iban',  label: 'Huidig rekeningnummer',   type: 'text',  ph: 'NL00 BANK 0000 0000 00' },
-      { id: 'nieuw_iban',   label: 'Nieuw rekeningnummer',    type: 'text',  required: true, ph: 'NL00 BANK 0000 0000 00' },
-      { id: 'ingangsdatum', label: 'Gewenste ingangsdatum',   type: 'date',  required: true },
-      { id: 'bericht',      label: 'Toelichting (optioneel)', type: 'textarea', ph: '' },
-    ],
-  },
-  'betaling-regeling': {
-    type: 'form', title: 'Betalingsregeling aanvragen',
-    intro: 'Lukt het tijdelijk niet om de huur te betalen? Neem zo vroeg mogelijk contact op — hoe eerder we weten wat er speelt, hoe beter we kunnen helpen. Aanvragen worden vertrouwelijk behandeld.',
-    fields: [
-      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'bericht',  label: 'Uw situatie en verzoek', type: 'textarea', required: true, ph: 'Omschrijf kort uw situatie en wat u nodig heeft...' },
-    ],
-  },
-  'betaling-aanmaning': {
-    type: 'info', title: 'Betaald maar toch een aanmaning?',
-    contactKey: 'betaling-aanmaning-form',
-    html: `
-      <p>Het kan voorkomen dat een aanmaning en uw betaling elkaar kruisen. Controleer eerst het volgende:</p>
-      <ol>
-        <li>Is uw betaling <strong>na de vervaldatum</strong> op de aanmaning gedaan?</li>
-        <li>Heeft u de juiste <strong>betalingsomschrijving</strong> gebruikt (bijv. uw huurnummer)?</li>
-        <li>Is het bedrag overgemaakt naar het <strong>juiste rekeningnummer</strong> van DOK74?</li>
-        <li>Is uw betaling misschien vertraagd door een <strong>weekend of feestdag</strong>?</li>
-      </ol>
-      <p>Betalingen worden doorgaans binnen <strong>1–2 werkdagen</strong> verwerkt. Als u langer dan 3 werkdagen geleden heeft betaald en de aanmaning blijft staan, neem dan contact op.</p>
-    `,
-  },
-  'betaling-aanmaning-form': {
-    type: 'form', title: 'Aanmaning melden',
-    intro: 'Stuur ons de details van uw betaling, dan zoeken we het voor u uit.',
-    fields: [
-      { id: 'naam',       label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',      label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon',   label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',      label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'betaaldatum',label: 'Datum van uw betaling', type: 'date',   required: true },
-      { id: 'bedrag',     label: 'Betaald bedrag',      type: 'text',     required: true, ph: 'bijv. € 895,00' },
-      { id: 'bericht',    label: 'Toelichting',         type: 'textarea', required: true, ph: 'Via welke bank en naar welk rekeningnummer heeft u betaald?' },
-    ],
-  },
-  'betaling-vraag': {
-    type: 'form', title: 'Vraag over betaling of facturen',
-    fields: [
-      { id: 'naam',     label: 'Naam',               type: 'text',     required: true, ph: 'Uw volledige naam' },
-      { id: 'email',    label: 'E-mailadres',         type: 'email',    required: true, ph: 'u@voorbeeld.nl' },
-      { id: 'telefoon', label: 'Telefoonnummer',      type: 'tel',      ph: '06 12345678' },
-      { id: 'adres',    label: 'Adres van uw woning', type: 'text',     required: true, ph: 'Straatnaam 74, Rotterdam' },
-      { id: 'bericht',  label: 'Uw vraag',            type: 'textarea', required: true, ph: 'Waar kunnen wij u mee helpen?' },
-    ],
-  },
-};
-
-// ─── STATE & HELPERS ─────────────────────────────────────────────────────────
+// ─── STATE ───────────────────────────────────────────────────────────────────
 let currentScreen = 'home';
-let currentModalKey = null;
-
-const backdrop     = document.getElementById('modal-backdrop');
-const modalTitle   = document.getElementById('modal-title');
-const modalBody    = document.getElementById('modal-body');
-const modalSuccess = document.getElementById('modal-success');
 
 // ─── SCREEN NAVIGATION ───────────────────────────────────────────────────────
 function showScreen(id) {
@@ -722,8 +327,6 @@ function handleTile(tile) {
     window.location.href = tile.action.url;
   } else if (tile.action.type === 'external') {
     window.open(tile.action.url, '_blank', 'noopener');
-  } else {
-    openModal(tile.action.key);
   }
 }
 
@@ -731,193 +334,6 @@ document.getElementById('back-btn').onclick = () => {
   const parent = SCREENS[currentScreen]?.parent || 'home';
   showScreen(parent);
 };
-
-// ─── MODAL ───────────────────────────────────────────────────────────────────
-function openModal(key) {
-  currentModalKey = key;
-  const m = MODALS[key];
-  if (!m) return;
-
-  modalTitle.textContent = m.title;
-  modalSuccess.style.display = 'none';
-  modalBody.style.display = '';
-  modalBody.innerHTML = '';
-
-  if (m.type === 'info') {
-    renderInfo(m);
-  } else {
-    renderForm(m);
-  }
-
-  backdrop.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function renderInfo(m) {
-  const div = document.createElement('div');
-  div.className = 'info-content';
-  div.innerHTML = m.html;
-  modalBody.appendChild(div);
-
-  if (m.contactKey) {
-    const btn = document.createElement('button');
-    btn.className = 'info-contact-btn';
-    btn.innerHTML = `<span>Heeft u nog een vraag? Neem contact op</span>${IC.arrow}`;
-    btn.onclick = () => openModal(m.contactKey);
-    modalBody.appendChild(btn);
-  }
-}
-
-function renderForm(m) {
-  if (m.note) {
-    const note = document.createElement('div');
-    note.className = 'form-intro';
-    note.style.background = 'var(--yellow-soft)';
-    note.style.borderLeft = '3px solid var(--yellow)';
-    note.style.padding = '10px 14px';
-    note.style.borderRadius = '0 var(--radius-sm) var(--radius-sm) 0';
-    note.style.marginBottom = '18px';
-    note.innerHTML = m.note;
-    modalBody.appendChild(note);
-  }
-
-  if (m.intro) {
-    const intro = document.createElement('div');
-    intro.className = 'form-intro';
-    intro.innerHTML = m.intro;
-    modalBody.appendChild(intro);
-  }
-
-  const form = document.createElement('form');
-  form.id = 'modal-form';
-  form.noValidate = true;
-
-  const hasOptionalContact = m.contactOptional &&
-    m.fields.some(f => f.id === 'email' || f.id === 'telefoon');
-
-  m.fields.forEach(f => {
-    const group = document.createElement('div');
-    group.className = 'form-group';
-
-    const label = document.createElement('label');
-    label.setAttribute('for', `f-${f.id}`);
-    label.innerHTML = f.label + (f.required ? ' <span class="req">*</span>' : '');
-    group.appendChild(label);
-
-    if (hasOptionalContact && f.id === 'email') {
-      const hint = document.createElement('p');
-      hint.className = 'form-contact-hint';
-      hint.textContent = 'Vul minimaal één contactgegeven in zodat we u kunnen bereiken.';
-      group.appendChild(hint);
-    }
-
-    let input;
-    if (f.type === 'textarea') {
-      input = document.createElement('textarea');
-      input.rows = 4;
-    } else if (f.type === 'select') {
-      input = document.createElement('select');
-      const def = document.createElement('option');
-      def.value = ''; def.textContent = '— Maak een keuze —';
-      input.appendChild(def);
-      f.options.forEach(o => {
-        const opt = document.createElement('option');
-        opt.value = o; opt.textContent = o;
-        input.appendChild(opt);
-      });
-    } else {
-      input = document.createElement('input');
-      input.type = f.type;
-    }
-
-    input.id = `f-${f.id}`;
-    input.name = f.id;
-    if (f.ph) input.placeholder = f.ph;
-    if (f.required) input.required = true;
-
-    group.appendChild(input);
-    form.appendChild(group);
-  });
-
-  const btn = document.createElement('button');
-  btn.type = 'submit';
-  btn.className = 'btn-primary';
-  btn.id = 'modal-submit';
-  btn.textContent = 'Versturen';
-  form.appendChild(btn);
-
-  form.addEventListener('submit', handleFormSubmit);
-  modalBody.appendChild(form);
-}
-
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  clearError();
-
-  const m = MODALS[currentModalKey];
-  const fields = {};
-  m.fields.forEach(f => {
-    const el = document.getElementById(`f-${f.id}`);
-    if (el) fields[f.id] = el.value.trim();
-  });
-
-  if (m.contactOptional) {
-    if (!fields.email && !fields.telefoon) {
-      showError('Vul uw e-mailadres of telefoonnummer in zodat we u kunnen bereiken.');
-      return;
-    }
-  }
-
-  const submitBtn = document.getElementById('modal-submit');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Bezig met versturen…';
-
-  try {
-    const resp = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category: currentModalKey, fields }),
-    });
-    const result = await resp.json();
-    if (result.ok) {
-      modalBody.style.display = 'none';
-      modalSuccess.style.display = '';
-    } else {
-      showError(result.error || 'Er is iets misgegaan. Probeer het opnieuw.');
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Versturen';
-    }
-  } catch {
-    showError('Verbindingsfout. Controleer uw internetverbinding en probeer het opnieuw.');
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Versturen';
-  }
-}
-
-function showError(msg) {
-  clearError();
-  const err = document.createElement('p');
-  err.id = 'form-error';
-  err.className = 'form-error';
-  err.textContent = msg;
-  const form = document.getElementById('modal-form');
-  if (form) form.prepend(err);
-}
-
-function clearError() {
-  const e = document.getElementById('form-error');
-  if (e) e.remove();
-}
-
-function closeModal() {
-  backdrop.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('modal-close').onclick = closeModal;
-backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal(); });
-document.getElementById('send-another').onclick = () => openModal(currentModalKey);
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 showScreen('home');

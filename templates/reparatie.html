@@ -218,7 +218,7 @@
       </div>
       <div class="tile-body">
         <div class="tile-title">CV-ketel of verwarming</div>
-        <div class="tile-desc">Geen of onvoldoende verwarming, ketel geeft foutmelding of maakt vreemde geluiden.</div>
+        <div class="tile-desc">Geen of onvoldoende verwarming, ketel geeft foutmelding of maakt vreemde geluiden. Bel ons de volgende werkdag.</div>
       </div>
       <svg class="tile-arrow" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </a>
@@ -229,7 +229,7 @@
       </div>
       <div class="tile-body">
         <div class="tile-title">Lekkage of wateroverlast</div>
-        <div class="tile-desc">Water binnendoor dak, muur of leiding. Bij actieve lekkage: bel direct onze spoedlijn.</div>
+        <div class="tile-desc">Water binnendoor dak, muur of leiding. Tip: draai bij een lekkage aan de waterleiding altijd eerst de hoofdkraan dicht.</div>
       </div>
       <svg class="tile-arrow" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </a>
@@ -267,6 +267,17 @@
       <svg class="tile-arrow" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
     </a>
 
+    <a class="tile" href="/reparatie/afvoer">
+      <div class="tile-icon ic-teal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 4v10"/><circle cx="12" cy="12" r="3"/><path d="M4 12h4m8 0h4"/></svg>
+      </div>
+      <div class="tile-body">
+        <div class="tile-title">Verstopte afvoer</div>
+        <div class="tile-desc">Een verstopte riolering, dakgoot of andere rioolproblemen in uw woning? Vul het formulier in en omschrijf duidelijk uw klacht.</div>
+      </div>
+      <svg class="tile-arrow" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
     <a class="tile" href="/reparatie/overig">
       <div class="tile-icon ic-grey">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -291,7 +302,7 @@
 const MODALS = {
   verwarming: {
     title: 'CV-ketel of verwarming melden',
-    note: 'Heeft u helemaal geen verwarming of warm water? Bel onze spoedlijn: <strong><a href="tel:0854011736" style="color:inherit">085 401 1736</a></strong> (24/7).',
+    note: 'Heeft u helemaal geen verwarming of warm water? Bel ons de volgende werkdag: <strong><a href="tel:0854011736" style="color:inherit">085 401 1736</a></strong> (bereikbaar tijdens kantooruren).',
     fields: [
       { id: 'naam',     label: 'Naam',               type: 'text',     required: true,  ph: 'Uw volledige naam' },
       { id: 'email',    label: 'E-mailadres',         type: 'email',    ph: 'u@voorbeeld.nl' },
@@ -306,7 +317,7 @@ const MODALS = {
   },
   lekkage: {
     title: 'Lekkage of wateroverlast melden',
-    note: 'Bij actieve lekkage die direct schade veroorzaakt: bel direct <strong><a href="tel:0854011736" style="color:inherit">085 401 1736</a></strong> (24/7).',
+    note: 'Bij lekkage aan de waterleiding: draai altijd eerst de hoofdkraan dicht. Bij actieve lekkage die direct schade veroorzaakt: bel direct <strong><a href="tel:0854011736" style="color:inherit">085 401 1736</a></strong>.',
     fields: [
       { id: 'naam',     label: 'Naam',               type: 'text',     required: true,  ph: 'Uw volledige naam' },
       { id: 'email',    label: 'E-mailadres',         type: 'email',    ph: 'u@voorbeeld.nl' },

@@ -296,9 +296,24 @@
 
       <p class="form-section-label">Uw wensen</p>
 
+      <div class="form-row-3">
+        <div class="form-group">
+          <label for="voorkeur_plaats">Voorkeursplaats <span class="req">*</span></label>
+          <input type="text" id="voorkeur_plaats" name="voorkeur_plaats" placeholder="bijv. Hoogeveen" required />
+        </div>
+        <div class="form-group">
+          <label for="afstand_km">Afstand (km)</label>
+          <input type="number" id="afstand_km" name="afstand_km" placeholder="bijv. 15" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="slaapkamers">Slaapkamers</label>
+          <input type="number" id="slaapkamers" name="slaapkamers" placeholder="bijv. 2" min="1" />
+        </div>
+      </div>
+
       <div class="form-group">
-        <label for="notities">Regio en wensen <span class="req">*</span></label>
-        <textarea id="notities" name="notities" placeholder="Geef aan in welke regio u zoekt en beschrijf uw wensen (type woning, huurprijs, aantal kamers, etc.)..." required></textarea>
+        <label for="notities">Overige wensen <span class="req">*</span></label>
+        <textarea id="notities" name="notities" placeholder="Beschrijf uw overige wensen (type woning, huurprijs, etc.)..." required></textarea>
       </div>
 
       <button type="submit" class="btn-primary" id="submit-btn">
@@ -326,8 +341,8 @@
 </footer>
 
 <script>
-const REQUIRED = ['voornaam', 'voorletters', 'achternaam', 'email', 'telefoon', 'straat', 'huisnummer', 'postcode', 'woonplaats', 'notities'];
-const ALL_FIELDS = ['bedrijf', ...REQUIRED, 'toevoeging'];
+const REQUIRED = ['voornaam', 'voorletters', 'achternaam', 'email', 'telefoon', 'straat', 'huisnummer', 'postcode', 'woonplaats', 'voorkeur_plaats', 'notities'];
+const ALL_FIELDS = ['bedrijf', ...REQUIRED, 'toevoeging', 'afstand_km', 'slaapkamers'];
 
 // Auto-fill city based on Dutch postcode
 document.getElementById('postcode').addEventListener('blur', async () => {

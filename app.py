@@ -24,9 +24,13 @@ CATEGORY_LABELS = {
     'reparatie-schimmel':     'Reparatie — Schimmel of vochtproblemen',
     'reparatie-raam':         'Reparatie — Ruit, raam of deur',
     'reparatie-elektra':      'Reparatie — Elektra of meterkast',
+    'reparatie-afvoer':       'Reparatie — Verstopte afvoer',
     'reparatie-overig':       'Reparatie — Overig',
     'sleutels':               'Sleutels & toegang',
-    'klacht':                 'Klacht indienen',
+    'klacht':                 'Laat ons weten hoe het beter kan',
+    'overlast':               'Overlast melden',
+    'storing-water':          'Storing — Geen water',
+    'storing-stroom':         'Storing — Geen stroom',
     'contact':                'Contact opnemen',
     'contract-kopie':         'Kopie huurcontract opvragen',
     'contract-opzeggen':      'Huurovereenkomst opzeggen',
@@ -78,7 +82,7 @@ def inschrijven():
 REPAIR_CATEGORIES = {
     'verwarming': {
         'title': 'CV-ketel of verwarming melden',
-        'note': 'Heeft u helemaal geen verwarming of warm water? Bel direct onze spoedlijn: <strong><a href="tel:0854011736" style="color:inherit">085&nbsp;401&nbsp;1736</a></strong> (24/7 bereikbaar).',
+        'note': 'Heeft u helemaal geen verwarming of warm water? Bel ons de volgende werkdag: <strong><a href="tel:0854011736" style="color:inherit">085&nbsp;401&nbsp;1736</a></strong> (bereikbaar tijdens kantooruren).',
         'contact_optional': True,
         'fields': [
             {'id': 'naam',     'label': 'Naam',                    'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
@@ -93,7 +97,7 @@ REPAIR_CATEGORIES = {
     },
     'lekkage': {
         'title': 'Lekkage of wateroverlast melden',
-        'note': 'Bij actieve lekkage die direct schade veroorzaakt: bel direct <strong><a href="tel:0854011736" style="color:inherit">085&nbsp;401&nbsp;1736</a></strong> (24/7).',
+        'note': 'Bij lekkage aan de waterleiding: draai altijd eerst de hoofdkraan dicht. Bij actieve lekkage die direct schade veroorzaakt: bel direct <strong><a href="tel:0854011736" style="color:inherit">085&nbsp;401&nbsp;1736</a></strong>.',
         'contact_optional': True,
         'fields': [
             {'id': 'naam',     'label': 'Naam',                    'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
@@ -147,6 +151,19 @@ REPAIR_CATEGORIES = {
              'placeholder': 'Bijv: groep 3 valt steeds uit als ik de magnetron aanzet...'},
         ],
     },
+    'afvoer': {
+        'title': 'Verstopte afvoer melden',
+        'note': None,
+        'contact_optional': True,
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',                    'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',              'type': 'email',    'required': False, 'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',           'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning',      'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Omschrijf het probleem',   'type': 'textarea', 'required': True,
+             'placeholder': 'Bijv: verstopte gootsteen in de keuken, water loopt niet weg via de douche, verstopte dakgoot...'},
+        ],
+    },
     'overig': {
         'title': 'Overige reparatie melden',
         'note': None,
@@ -163,6 +180,203 @@ REPAIR_CATEGORIES = {
         ],
     },
 }
+
+
+CONTACT_FORMS = {
+    'sleutels': {
+        'title': 'Sleutels & toegang',
+        'category': 'sleutels',
+        'back_url': '/',
+        'button_text': 'Aanvraag versturen',
+        'contact_optional': True,
+        'intro': 'Extra sleutel nodig, sleutel kwijt of pas defect? Vul het formulier in en wij nemen zo snel mogelijk contact met u op.',
+        'fields': [
+            {'id': 'naam',          'label': 'Naam',               'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',         'label': 'E-mailadres',         'type': 'email',    'required': False, 'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon',      'label': 'Telefoonnummer',      'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',         'label': 'Adres van uw woning', 'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'type_aanvraag', 'label': 'Soort aanvraag',      'type': 'select',   'required': True,
+             'options': ['Extra sleutel aanvragen', 'Sleutel kwijt / verloren', 'Toegangspas defect', 'Anders']},
+            {'id': 'bericht',       'label': 'Toelichting',         'type': 'textarea', 'required': True,  'placeholder': 'Aanvullende informatie...'},
+        ],
+    },
+    'klacht': {
+        'title': 'Laat ons weten hoe het beter kan',
+        'category': 'klacht',
+        'back_url': '/',
+        'button_text': 'Bericht versturen',
+        'contact_optional': False,
+        'intro': 'Wij willen graag weten wat er beter kan. Uw feedback helpt ons om onze dienstverlening te verbeteren.',
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',               'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',         'type': 'email',    'required': True,  'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',      'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning', 'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Omschrijf uw feedback', 'type': 'textarea', 'required': True, 'placeholder': 'Vertel ons wat er beter kan...'},
+        ],
+    },
+    'contact': {
+        'title': 'Contact opnemen',
+        'category': 'contact',
+        'back_url': '/',
+        'button_text': 'Bericht versturen',
+        'contact_optional': True,
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',                                        'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',                                  'type': 'email',    'required': False, 'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',                               'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning (indien van toepassing)',   'type': 'text',     'required': False, 'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Uw bericht',                                   'type': 'textarea', 'required': True,  'placeholder': 'Hoe kunnen wij u helpen?'},
+        ],
+    },
+    'contract-opzeggen': {
+        'title': 'Huuropzegging verzoek indienen',
+        'category': 'contract-opzeggen',
+        'back_url': '/',
+        'button_text': 'Opzegging indienen',
+        'contact_optional': False,
+        'intro': '<p>Elk huurcontract heeft zijn eigen opzegtermijn. Raadpleeg uw huurovereenkomst voor de exacte voorwaarden.</p><h3>Hoe werkt het?</h3><p><strong>Stap 1 — Huur opzeggen</strong><br>We raden aan om de huur zo vroeg mogelijk op te zeggen. Hierdoor is de kans groter dat er een nieuwe huurder bekend is als u vertrekt. Met de nieuwe huurder kunt u onderling overnames regelen. Wij spelen geen actieve rol in de afspraken die huurders onderling maken over de overname.</p><p><strong>Stap 2 — Voor- en eindinspectie</strong><br>Bij de voorinspectie bekijken we of het huis in goede staat is en of er veranderingen zijn aangebracht. We geven aan hoe de woning opgeleverd moet worden. De voorinspectie wordt binnen 8 werkdagen na ontvangst van de huuropzegging ingepland. Bij de eindinspectie controleren we of de woning volgens afspraak is opgeleverd.</p><p><strong>Stap 3 — Nieuwe bewoners en overname</strong><br>Overname van spullen is alleen mogelijk als er een nieuwe huurder bekend is. Bij het opzeggen van de huur ontvangt u een formulier waarop u afspraken over de overname kunt vastleggen met de nieuwe huurder.<br><em>Let op: levert u geen overnameformulier in? Dan gaan wij ervan uit dat er niets wordt overgenomen.</em></p><p><strong>Stap 4 — Sleutels inleveren</strong><br>De einddatum van de huur staat in de bevestiging die u van ons krijgt. Hierin staat ook waar en wanneer u de sleutels moet inleveren.</p><p><strong>Stap 5 — Eindrekening</strong><br>Nadat u de sleutels hebt ingeleverd, ontvangt u van ons een eindafrekening binnen 8 werkdagen. Hierin ziet u of wij nog geld van u krijgen of u van ons. Eventuele reparatiekosten worden verrekend als de woning niet is achtergelaten zoals afgesproken bij de voorinspectie. Bij woningen met servicekosten ontvangt u nog een aparte afrekening voor de stook- en/of servicekosten.</p>',
+        'fields': [
+            {'id': 'naam',      'label': 'Naam',                  'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',     'label': 'E-mailadres',            'type': 'email',    'required': True,  'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon',  'label': 'Telefoonnummer',         'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',     'label': 'Adres van uw woning',    'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'einddatum', 'label': 'Gewenste einddatum',     'type': 'date',     'required': True,  'placeholder': ''},
+            {'id': 'bericht',   'label': 'Aanvullende toelichting', 'type': 'textarea', 'required': False, 'placeholder': 'Optionele toelichting...'},
+        ],
+    },
+    'contract-vraag': {
+        'title': 'Vraag over uw huurcontract',
+        'category': 'contract-vraag',
+        'back_url': '/',
+        'button_text': 'Vraag versturen',
+        'contact_optional': False,
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',               'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',         'type': 'email',    'required': True,  'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',      'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning', 'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Uw vraag',            'type': 'textarea', 'required': True,  'placeholder': 'Waar kunnen wij u mee helpen?'},
+        ],
+    },
+    'contract-medehuurder': {
+        'title': 'Verzoek tot medehuurder',
+        'category': 'contract-medehuurder',
+        'back_url': '/',
+        'button_text': 'Verzoek indienen',
+        'contact_optional': False,
+        'intro': 'Om een medehuurder toe te voegen hebben wij nodig:<ul style="margin:6px 0 0 16px;line-height:1.8"><li>Kopie geldig identiteitsbewijs van de medehuurder</li><li>Inkomensverklaring of werkgeversverklaring</li></ul><br>Dien uw verzoek in via dit formulier. Wij nemen contact op over de verdere procedure.',
+        'fields': [
+            {'id': 'naam',             'label': 'Uw naam',                'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',            'label': 'E-mailadres',             'type': 'email',    'required': True,  'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon',         'label': 'Telefoonnummer',          'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',            'label': 'Adres van de woning',     'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'naam_medehuurder', 'label': 'Naam medehuurder',        'type': 'text',     'required': True,  'placeholder': 'Volledige naam medehuurder'},
+            {'id': 'bericht',          'label': 'Aanvullende informatie',  'type': 'textarea', 'required': False, 'placeholder': 'Eventuele toelichting...'},
+        ],
+    },
+    'overlast': {
+        'title': 'Overlast melden',
+        'category': 'overlast',
+        'back_url': '/',
+        'button_text': 'Melding versturen',
+        'contact_optional': False,
+        'intro': 'Klachten over overlast van buren kunt u bij ons melden. Omschrijf de situatie zo duidelijk mogelijk zodat wij u kunnen helpen.',
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',               'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',         'type': 'email',    'required': True,  'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',      'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning', 'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Omschrijf de overlast', 'type': 'textarea', 'required': True, 'placeholder': 'Wat is er aan de hand, wanneer speelt het, wie betreft het...'},
+        ],
+    },
+    'storing-water': {
+        'title': 'Geen water melden',
+        'category': 'storing-water',
+        'back_url': '/storingen',
+        'button_text': 'Melding versturen',
+        'contact_optional': True,
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',                  'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',            'type': 'email',    'required': False, 'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',         'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning',    'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Omschrijf het probleem', 'type': 'textarea', 'required': True,  'placeholder': 'Bijv: helemaal geen water, alleen koud water, lage druk...'},
+        ],
+    },
+    'storing-stroom': {
+        'title': 'Geen stroom melden',
+        'category': 'storing-stroom',
+        'back_url': '/storingen',
+        'button_text': 'Melding versturen',
+        'contact_optional': True,
+        'note': 'Controleer eerst uw meterkast. Staat een schakelaar naar beneden? Zet deze weer omhoog. Valt hij opnieuw uit, dan is er mogelijk een kortsluiting.',
+        'fields': [
+            {'id': 'naam',     'label': 'Naam',                  'type': 'text',     'required': True,  'placeholder': 'Uw volledige naam'},
+            {'id': 'email',    'label': 'E-mailadres',            'type': 'email',    'required': False, 'placeholder': 'u@voorbeeld.nl'},
+            {'id': 'telefoon', 'label': 'Telefoonnummer',         'type': 'tel',      'required': False, 'placeholder': '06 12345678'},
+            {'id': 'adres',    'label': 'Adres van uw woning',    'type': 'text',     'required': True,  'placeholder': 'Straatnaam 74, Rotterdam'},
+            {'id': 'bericht',  'label': 'Omschrijf het probleem', 'type': 'textarea', 'required': True,  'placeholder': 'Bijv: hele woning geen stroom, groep valt steeds uit...'},
+        ],
+    },
+}
+
+
+@app.route('/formulier/<slug>')
+def formulier(slug):
+    form = CONTACT_FORMS.get(slug)
+    if not form:
+        return redirect('/')
+    return render_template('formulier.html', **form)
+
+
+@app.route('/contact')
+def contact_page():
+    return render_template('contact.html')
+
+
+@app.route('/info/huisregels')
+def info_huisregels():
+    return render_template('info.html',
+        title='Huisregels & afspraken',
+        back_url='/',
+        contact_url='/formulier/contract-vraag',
+        content="""
+        <p>Voor een prettige woonomgeving gelden de volgende regels:</p>
+        <ul>
+            <li><strong>Geluidsoverlast:</strong> Vermijd geluidsoverlast tussen 22:00 en 08:00.</li>
+            <li><strong>Gemeenschappelijke ruimtes:</strong> Gangen, trappenhuizen en bergingen dienen vrij te blijven van privéspullen.</li>
+            <li><strong>Huisdieren:</strong> Alleen toegestaan met schriftelijke toestemming van DOK74 Verhuur.</li>
+            <li><strong>Verbouwingen:</strong> Aanpassingen aan de woning vereisen altijd schriftelijke toestemming.</li>
+            <li><strong>Onderverhuur:</strong> Geheel of gedeeltelijk onderverhuren is niet toegestaan zonder toestemming.</li>
+            <li><strong>Afval:</strong> Scheid uw afval en gebruik de daarvoor bestemde containers.</li>
+            <li><strong>Roken:</strong> In gemeenschappelijke ruimtes is roken niet toegestaan.</li>
+            <li><strong>Overlast:</strong> Klachten over overlast van buren kunt u bij ons melden.</li>
+            <li><strong>Internet &amp; data:</strong> De internetaansluiting en het contract met een provider is de verantwoordelijkheid van de huurder, niet van de verhuurder.</li>
+        </ul>
+        <p>Het volledige huishoudelijk reglement staat in uw huurpakket.</p>
+        """)
+
+
+@app.route('/info/looptijd')
+def info_looptijd():
+    return render_template('info.html',
+        title='Looptijd & verlenging contract',
+        back_url='/',
+        contact_url='/formulier/contract-vraag',
+        content="""
+        <p>Wilt u weten wat de looptijd of opzegtermijn van uw huurcontract is, of wanneer uw contract afloopt? Vraag het op via onderstaande knop &mdash; wij informeren u zo snel mogelijk.</p>
+        """)
+
+
+@app.route('/storingen')
+def storingen():
+    return render_template('storingen.html')
+
+
+@app.route('/storingen/internet')
+def storingen_internet():
+    return render_template('storingen_internet.html')
 
 
 @app.route('/landing')

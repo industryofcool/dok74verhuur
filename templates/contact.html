@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact opnemen — DOK74 Verhuur</title>
+  <style>
+    :root {
+      --yellow:      #F5C900;
+      --yellow-dark: #C9A400;
+      --yellow-soft: #FFFBE6;
+      --grey-900:    #2A2A2A;
+      --grey-700:    #585858;
+      --grey-500:    #8A8A8A;
+      --grey-200:    #E8E8E8;
+      --grey-100:    #F5F5F5;
+      --white:       #FFFFFF;
+      --green:       #059669;
+      --green-soft:  #ECFDF5;
+      --shadow:      0 2px 16px rgba(0,0,0,.07);
+      --shadow-md:   0 4px 24px rgba(0,0,0,.11);
+      --radius:      12px;
+      --radius-sm:   8px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--white); color: var(--grey-900); min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header { background: var(--white); border-bottom: 1px solid var(--grey-200); box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+    .header-inner {
+      max-width: 1040px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .84rem; font-weight: 600; color: var(--grey-700);
+      text-decoration: none; padding: 7px 13px;
+      border-radius: var(--radius-sm); border: 1px solid var(--grey-200);
+      transition: border-color .15s, background .15s;
+    }
+    .back-link:hover { border-color: var(--yellow); background: var(--yellow-soft); }
+    .header-phone {
+      display: flex; align-items: center; gap: 7px; font-size: .85rem; color: var(--grey-700);
+      text-decoration: none; padding: 7px 13px; border-radius: var(--radius-sm);
+      border: 1px solid var(--grey-200); transition: border-color .15s, background .15s;
+    }
+    .header-phone:hover { border-color: var(--yellow); background: var(--yellow-soft); }
+
+    /* ── HERO ── */
+    .hero { background: var(--white); border-bottom: 3px solid var(--yellow); padding: 32px 24px 28px; text-align: center; }
+    .hero-inner { max-width: 680px; margin: 0 auto; }
+    .hero h1 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; letter-spacing: -.03em; color: var(--grey-900); margin-bottom: 8px; }
+    .hero p { font-size: .97rem; color: var(--grey-700); line-height: 1.65; }
+
+    /* ── MAIN ── */
+    main { max-width: 900px; margin: 0 auto; padding: 32px 20px 72px; }
+
+    /* ── TILES ── */
+    .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+    .tile {
+      background: var(--white); border: 1px solid var(--grey-200); border-radius: var(--radius);
+      padding: 24px 20px; display: flex; flex-direction: column; gap: 14px;
+      transition: transform .17s, box-shadow .17s, border-color .17s;
+      text-decoration: none; color: inherit;
+    }
+    .tile:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--yellow); }
+    .tile-top { display: flex; align-items: flex-start; gap: 14px; }
+    .tile-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tile-icon svg { width: 21px; height: 21px; }
+    .tile-body { flex: 1; }
+    .tile-title { font-size: .93rem; font-weight: 700; margin-bottom: 4px; color: var(--grey-900); }
+    .tile-desc { font-size: .79rem; color: var(--grey-500); line-height: 1.5; }
+    .tile-note {
+      font-size: .78rem; color: var(--grey-500); line-height: 1.55;
+      background: var(--grey-100); border-radius: var(--radius-sm);
+      padding: 10px 13px;
+    }
+    .tile-note strong { color: var(--grey-700); }
+    .tile-arrow { color: var(--grey-200); transition: color .17s, transform .17s; flex-shrink: 0; margin-top: 2px; }
+    .tile:hover .tile-arrow { color: var(--yellow-dark); transform: translateX(3px); }
+    .ic-blue   { background: #EFF6FF; } .ic-blue   svg { color: #2563EB; }
+    .ic-green  { background: var(--green-soft); } .ic-green  svg { color: var(--green); }
+    .ic-purple { background: #F5F3FF; } .ic-purple svg { color: #7C3AED; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 28px 20px; font-size: .84rem;
+      color: var(--grey-700); border-top: 2px solid var(--yellow); background: var(--white);
+    }
+    footer a { color: var(--grey-900); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="back-link">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Terug naar overzicht
+    </a>
+    <a href="tel:0854011736" class="header-phone">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.59 1.21l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l1.36-1.36a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      085 401 1736
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Contact opnemen</h1>
+    <p>Kies hieronder hoe u contact met ons wilt opnemen.</p>
+  </div>
+</section>
+
+<main>
+  <div class="tiles">
+
+    <a class="tile" href="tel:0854011736">
+      <div class="tile-top">
+        <div class="tile-icon ic-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.42 2 2 0 0 1 3.59 1.21l3-.03a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l1.36-1.36a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Bel ons — 085 401 1736</div>
+          <div class="tile-desc">Neem telefonisch contact op met DOK74 Verhuur.</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="tile" href="https://wa.me/31854011736" target="_blank" rel="noopener">
+      <div class="tile-top">
+        <div class="tile-icon ic-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">WhatsApp ons</div>
+          <div class="tile-desc">Stuur ons direct een WhatsApp-bericht. Handig voor vragen die niet urgent zijn.</div>
+        </div>
+      </div>
+    </a>
+
+    <a class="tile" href="/formulier/contact">
+      <div class="tile-top">
+        <div class="tile-icon ic-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="tile-body">
+          <div class="tile-title">Contactformulier invullen</div>
+          <div class="tile-desc">Stel een vraag of stuur ons een bericht via het formulier. Wij nemen zo snel mogelijk contact op.</div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 DOK74 Verhuur BV &nbsp;&middot;&nbsp;
+  <a href="tel:0854011736">085 401 1736</a> &nbsp;&middot;&nbsp;
+  <a href="mailto:info@dok74verhuur.nl">info@dok74verhuur.nl</a>
+</footer>
+
+</body>
+</html>
