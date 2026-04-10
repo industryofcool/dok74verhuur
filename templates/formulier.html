@@ -93,6 +93,20 @@
       border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(245,201,0,.18);
     }
     .form-group textarea { resize: vertical; min-height: 96px; }
+    .form-group input[type="file"] { padding: 7px 11px; cursor: pointer; }
+    .form-group input[type="file"]::file-selector-button {
+      background: var(--yellow-soft); color: var(--grey-900);
+      border: 1px solid var(--yellow); border-radius: 6px;
+      padding: 5px 11px; font-size: .78rem; font-weight: 600;
+      cursor: pointer; margin-right: 10px; font-family: inherit;
+    }
+    .form-group input[type="file"]::file-selector-button:hover { background: var(--yellow); }
+    .file-preview { margin-top: 8px; font-size: .78rem; color: var(--grey-500); }
+    .file-preview img {
+      max-width: 140px; max-height: 100px; object-fit: cover;
+      border-radius: var(--radius-sm); border: 1px solid var(--grey-200);
+      margin-top: 6px; display: block;
+    }
     .contact-hint { font-size: .76rem; color: var(--grey-500); margin: -8px 0 12px; }
     .form-error {
       background: var(--red-soft); border: 1px solid var(--red-border);
@@ -188,6 +202,12 @@
             <option value="{{ opt }}">{{ opt }}</option>
             {% endfor %}
           </select>
+        {% elif field.type == 'file' %}
+          <input type="file" id="f-{{ field.id }}" name="{{ field.id }}"
+            {% if field.accept %}accept="{{ field.accept }}"{% endif %}
+            {% if field.capture %}capture="{{ field.capture }}"{% endif %}
+            {% if field.required %}required{% endif %} />
+          <div class="file-preview" id="preview-{{ field.id }}"></div>
         {% else %}
           <input type="{{ field.type }}" id="f-{{ field.id }}" name="{{ field.id }}"
             {% if field.placeholder %}placeholder="{{ field.placeholder }}"{% endif %}
@@ -220,6 +240,44 @@
 <script>
 const CATEGORY         = '{{ category }}';
 const CONTACT_OPTIONAL = {{ 'true' if contact_optional else 'false' }};
+const MAX_FILE_BYTES   = 8 * 1024 * 1024;
+
+document.querySelectorAll('input[type="file"]').forEach(input => {
+  input.addEventListener('change', () => {
+    const preview = document.getElementById(`preview-${input.name}`);
+    if (!preview) return;
+    preview.innerHTML = '';
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > MAX_FILE_BYTES) {
+      preview.textContent = `Bestand te groot (max 8 MB). Dit bestand is ${(file.size/1024/1024).toFixed(1)} MB.`;
+      preview.style.color = 'var(--red)';
+      input.value = '';
+      return;
+    }
+    preview.style.color = '';
+    preview.innerHTML = `<span>${file.name} (${(file.size/1024).toFixed(0)} kB)</span>`;
+    if (file.type.startsWith('image/')) {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      preview.appendChild(img);
+    }
+  });
+});
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve({
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      base64: reader.result.split(',')[1],
+    });
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 document.getElementById('contact-form').addEventListener('submit', async e => {
   e.preventDefault();
@@ -227,9 +285,21 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
   if (errEl) errEl.remove();
 
   const fields = {};
-  e.target.querySelectorAll('input, textarea, select').forEach(el => {
-    fields[el.name] = el.value.trim();
-  });
+  const files = {};
+  for (const el of e.target.querySelectorAll('input, textarea, select')) {
+    if (el.type === 'file') {
+      if (el.files[0]) {
+        try {
+          files[el.name] = await readFileAsBase64(el.files[0]);
+        } catch {
+          showError('Kon het bestand niet inlezen. Probeer een andere foto.');
+          return;
+        }
+      }
+    } else {
+      fields[el.name] = el.value.trim();
+    }
+  }
 
   if (CONTACT_OPTIONAL && !fields.email && !fields.telefoon) {
     showError('Vul uw e-mailadres of telefoonnummer in zodat we u kunnen bereiken.');
@@ -244,7 +314,7 @@ document.getElementById('contact-form').addEventListener('submit', async e => {
     const resp = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category: CATEGORY, fields }),
+      body: JSON.stringify({ category: CATEGORY, fields, files }),
     });
     const result = await resp.json();
     if (result.ok) {

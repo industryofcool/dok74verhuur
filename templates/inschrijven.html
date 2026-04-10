@@ -111,13 +111,13 @@
     .form-group { margin-bottom: 14px; }
     .form-group label { display: block; font-size: .82rem; font-weight: 600; color: var(--grey-700); margin-bottom: 4px; }
     .form-group label .req { color: var(--red); margin-left: 2px; }
-    .form-group input, .form-group textarea {
+    .form-group input, .form-group textarea, .form-group select {
       width: 100%; padding: 9px 11px; font-size: .88rem; font-family: inherit;
       color: var(--grey-900); background: var(--white);
       border: 1.5px solid var(--grey-200); border-radius: var(--radius-sm);
-      outline: none; transition: border-color .15s, box-shadow .15s;
+      outline: none; transition: border-color .15s, box-shadow .15s; appearance: none;
     }
-    .form-group input:focus, .form-group textarea:focus {
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
       border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(245,201,0,.18);
     }
     .form-group textarea { resize: vertical; min-height: 96px; }
@@ -290,7 +290,7 @@
         </div>
         <div class="form-group">
           <label for="woonplaats">Woonplaats <span class="req">*</span></label>
-          <input type="text" id="woonplaats" name="woonplaats" placeholder="Rotterdam" required />
+          <input type="text" id="woonplaats" name="woonplaats" placeholder="Hoogeveen" required />
         </div>
       </div>
 
@@ -314,6 +314,18 @@
       <div class="form-group">
         <label for="notities">Overige wensen <span class="req">*</span></label>
         <textarea id="notities" name="notities" placeholder="Beschrijf uw overige wensen (type woning, huurprijs, etc.)..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="herkomst">Hoe bent u met ons in contact gekomen? <span class="req">*</span></label>
+        <select id="herkomst" name="herkomst" required>
+          <option value="">— Maak een keuze —</option>
+          <option value="Via internet">Via internet</option>
+          <option value="Via Facebook">Via Facebook</option>
+          <option value="Via Instagram">Via Instagram</option>
+          <option value="Via vrienden of bekenden">Via vrienden of bekenden</option>
+          <option value="Anders">Anders</option>
+        </select>
       </div>
 
       <button type="submit" class="btn-primary" id="submit-btn">
@@ -341,7 +353,7 @@
 </footer>
 
 <script>
-const REQUIRED = ['voornaam', 'voorletters', 'achternaam', 'email', 'telefoon', 'straat', 'huisnummer', 'postcode', 'woonplaats', 'voorkeur_plaats', 'notities'];
+const REQUIRED = ['voornaam', 'voorletters', 'achternaam', 'email', 'telefoon', 'straat', 'huisnummer', 'postcode', 'woonplaats', 'voorkeur_plaats', 'notities', 'herkomst'];
 const ALL_FIELDS = ['bedrijf', ...REQUIRED, 'toevoeging', 'afstand_km', 'slaapkamers'];
 
 // Auto-fill city based on Dutch postcode
